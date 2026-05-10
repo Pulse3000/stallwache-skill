@@ -1,28 +1,4 @@
 {
-  "name": "Stallwache",
-  "version": "1.0.0",
-  "description": "AI-powered calf birthing detection system with real-time monitoring",
-  "author": "Stallwache Team",
-  "email": "stallwache123@gmail.com",
-  "license": "MIT",
-  "repository": "https://github.com/stallwache/skill",
-  "homepage": "https://github.com/stallwache/skill",
-  "tags": [
-    "AI",
-    "Object Detection",
-    "Cattle",
-    "Farming",
-    "IoT",
-    "Telegram",
-    "YOLOv8",
-    "Computer Vision"
-  ],
-  "categories": [
-    "Agriculture",
-    "AI/ML",
-    "IoT",
-    "Monitoring"
-  ],
   "features": [
     "Real-time YOLOv8 detection (28-30 FPS)",
     "RTSP camera stream processing",
@@ -33,14 +9,55 @@
     "24/7 monitoring with auto-restart",
     "Comprehensive logging and metrics"
   ],
+  "repository": "https://github.com/stallwache/skill",
+  "email": "stallwache123@gmail.com",
+  "version": "1.0.0",
+  "support": {
+    "documentation": "See project files",
+    "email": "stallwache123@gmail.com",
+    "github": "https://github.com/stallwache/skill"
+  },
   "requirements": [
     "Python 3.10+",
     "IP Camera with RTSP",
     "Docker & Docker Compose (for local)",
-    "Vercel account (for cloud)"
+    "Vercel account (for cloud)",
+    "Telegram bot token"
   ],
-  "support": {
-    "email": "stallwache123@gmail.com",
-    "github": "https://github.com/stallwache/skill"
-  }
+  "author": "Stallwache Team",
+  "keywords": [
+    "calf",
+    "birthing",
+    "detection",
+    "agriculture",
+    "monitoring",
+    "AI",
+    "cattle"
+  ],
+  "license": "MIT",
+  "deployment": [
+    "Docker",
+    "Vercel Serverless",
+    "Cloud",
+    "Local"
+  ],
+  "tags": [
+    "AI",
+    "Object Detection",
+    "Cattle",
+    "Farming",
+    "IoT",
+    "Telegram",
+    "YOLOv8",
+    "Computer Vision"
+  ],
+  "name": "Stallwache",
+  "categories": [
+    "Agriculture",
+    "AI/ML",
+    "IoT",
+    "Monitoring"
+  ],
+  "homepage": "https://github.com/stallwache/skill",
+  "description": "AI-powered calf birthing detection system with real-time monitoring"
 }
