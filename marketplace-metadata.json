@@ -1,46 +1,5 @@
 {
-  "features": [
-    "Real-time YOLOv8 detection (28-30 FPS)",
-    "RTSP camera stream processing",
-    "Telegram alerts with images",
-    "SQLite event logging",
-    "Docker deployment (one-command)",
-    "Vercel serverless REST API",
-    "24/7 monitoring with auto-restart",
-    "Comprehensive logging and metrics"
-  ],
-  "repository": "https://github.com/stallwache/skill",
-  "email": "stallwache123@gmail.com",
-  "version": "1.0.0",
-  "support": {
-    "documentation": "See project files",
-    "email": "stallwache123@gmail.com",
-    "github": "https://github.com/stallwache/skill"
-  },
-  "requirements": [
-    "Python 3.10+",
-    "IP Camera with RTSP",
-    "Docker & Docker Compose (for local)",
-    "Vercel account (for cloud)",
-    "Telegram bot token"
-  ],
-  "author": "Stallwache Team",
-  "keywords": [
-    "calf",
-    "birthing",
-    "detection",
-    "agriculture",
-    "monitoring",
-    "AI",
-    "cattle"
-  ],
-  "license": "MIT",
-  "deployment": [
-    "Docker",
-    "Vercel Serverless",
-    "Cloud",
-    "Local"
-  ],
+  "description": "AI-powered calf birthing detection system with real-time monitoring",
   "tags": [
     "AI",
     "Object Detection",
@@ -51,13 +10,54 @@
     "YOLOv8",
     "Computer Vision"
   ],
+  "homepage": "https://github.com/stallwache/skill",
+  "repository": "https://github.com/stallwache/skill",
+  "requirements": [
+    "Python 3.10+",
+    "IP Camera with RTSP",
+    "Docker & Docker Compose (for local)",
+    "Vercel account (for cloud)",
+    "Telegram bot token"
+  ],
+  "author": "Stallwache Team",
   "name": "Stallwache",
+  "support": {
+    "github": "https://github.com/stallwache/skill",
+    "email": "stallwache123@gmail.com",
+    "documentation": "See project files"
+  },
+  "keywords": [
+    "calf",
+    "birthing",
+    "detection",
+    "agriculture",
+    "monitoring",
+    "AI",
+    "cattle"
+  ],
+  "email": "stallwache123@gmail.com",
   "categories": [
     "Agriculture",
     "AI/ML",
     "IoT",
     "Monitoring"
   ],
-  "homepage": "https://github.com/stallwache/skill",
-  "description": "AI-powered calf birthing detection system with real-time monitoring"
+  "features": [
+    "Real-time YOLOv8 detection (28-30 FPS)",
+    "RTSP camera stream processing",
+    "Telegram alerts with images",
+    "SQLite event logging",
+    "Docker deployment (one-command)",
+    "Vercel serverless REST API",
+    "24/7 monitoring with auto-restart",
+    "Comprehensive logging and metrics"
+  ],
+  "version": "1.0.0",
+  "deployment": [
+    "Docker",
+    "Vercel Serverless",
+    "Cloud",
+    "Local"
+  ],
+  "license": "MIT"
 }
