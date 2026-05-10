@@ -1,0 +1,170 @@
+================================================================================
+🚀 HOW TO RUN AUTO DEPLOYMENT
+================================================================================
+
+You now have TWO AUTOMATED SCRIPTS ready to execute:
+
+1. auto_deploy.ps1  (for Windows - RECOMMENDED)
+2. auto_deploy.sh   (for macOS/Linux)
+
+================================================================================
+FOR WINDOWS USERS (RECOMMENDED)
+================================================================================
+
+STEP 1: Open PowerShell
+────────────────────────────────────────────────────────────────────────────
+
+Windows Key → Type "PowerShell" → Enter
+(Or right-click on your Stallwache folder → Open in Terminal/PowerShell)
+
+STEP 2: Navigate to Stallwache directory
+────────────────────────────────────────────────────────────────────────────
+
+cd C:\Users\axe2k\Desktop\Projekt\ Stall\stallwache\Stallwache
+
+(Verify you're in the right place:)
+pwd
+(Should show: ...Stallwache)
+
+STEP 3: Check if script execution is allowed
+────────────────────────────────────────────────────────────────────────────
+
+Get-ExecutionPolicy
+
+If it shows "Restricted", allow scripts for this session:
+Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process
+
+STEP 4: Run the deployment script
+────────────────────────────────────────────────────────────────────────────
+
+.\auto_deploy.ps1
+
+The script will:
+  ✓ Initialize Git
+  ✓ Add all files
+  ✓ Create commit
+  ✓ Show you instructions for creating GitHub repo
+  ✓ Ask for your GitHub URL
+  ✓ Push code to GitHub
+  ✓ Verify everything
+
+STEP 5: Follow the prompts
+────────────────────────────────────────────────────────────────────────────
+
+When the script asks for GitHub URL:
+  1. Go to: https://github.com/new
+  2. Create repo named: stallwache-skill
+  3. Public, with README + .gitignore + MIT License
+  4. Copy the URL: https://github.com/YOUR_USERNAME/stallwache-skill.git
+  5. Paste it when prompted
+
+DONE!
+────────────────────────────────────────────────────────────────────────────
+
+When complete, you'll see: ✅ STALLWACHE GITHUB DEPLOYMENT SUCCESSFUL!
+
+Your GitHub repo will be: https://github.com/YOUR_USERNAME/stallwache-skill
+
+================================================================================
+FOR macOS/LINUX USERS
+================================================================================
+
+STEP 1: Open Terminal
+────────────────────────────────────────────────────────────────────────────
+
+macOS: CMD + Space → type "Terminal" → Enter
+Linux: Ctrl + Alt + T (or your terminal app)
+
+STEP 2: Navigate to Stallwache directory
+────────────────────────────────────────────────────────────────────────────
+
+cd ~/stallwache
+# or
+cd /path/to/Stallwache
+
+(Verify:)
+pwd
+(Should show: ...Stallwache)
+
+STEP 3: Make script executable
+────────────────────────────────────────────────────────────────────────────
+
+chmod +x auto_deploy.sh
+
+STEP 4: Run the deployment script
+────────────────────────────────────────────────────────────────────────────
+
+./auto_deploy.sh
+
+The script will:
+  ✓ Initialize Git
+  ✓ Add all files
+  ✓ Create commit
+  ✓ Show you instructions for creating GitHub repo
+  ✓ Ask for your GitHub URL
+  ✓ Push code to GitHub
+  ✓ Verify everything
+
+STEP 5: Follow the prompts
+────────────────────────────────────────────────────────────────────────────
+
+When the script asks for GitHub URL:
+  1. Go to: https://github.com/new
+  2. Create repo named: stallwache-skill
+  3. Public, with README + .gitignore + MIT License
+  4. Copy the URL: https://github.com/YOUR_USERNAME/stallwache-skill.git
+  5. Paste it when prompted
+
+DONE!
+────────────────────────────────────────────────────────────────────────────
+
+When complete, you'll see: ✅ STALLWACHE GITHUB DEPLOYMENT SUCCESSFUL!
+
+Your GitHub repo will be: https://github.com/YOUR_USERNAME/stallwache-skill
+
+================================================================================
+IF YOU GET AN ERROR
+================================================================================
+
+"git: command not found"
+→ Install Git: https://git-scm.com/download
+→ Then try again
+
+"Permission denied" (on Linux/Mac)
+→ Make sure you ran: chmod +x auto_deploy.sh
+→ Then try: ./auto_deploy.sh
+
+"fatal: not a git repository"
+→ Make sure you're in the Stallwache directory
+→ Check with: pwd
+
+"Script execution is disabled" (Windows)
+→ Run: Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process
+→ Then try: .\auto_deploy.ps1
+
+For more help:
+→ Read: GIT_INIT_STEPS.md
+→ Email: stallwache123@gmail.com
+
+================================================================================
+WHAT HAPPENS NEXT
+================================================================================
+
+AFTER GITHUB PUSH:
+
+✅ Your code is PUBLIC on GitHub
+✅ Ready for Phase 2: .skill file creation
+✅ Tomorrow: Run CREATE_SKILL_FILE.md
+✅ Days 2-7: Submit to Marketplace
+✅🎉 LAUNCH!
+
+================================================================================
+YOU'VE GOT THIS! 🚀🐄
+================================================================================
+
+Just run the script, follow the prompts, create the GitHub repo, and done!
+
+In 30 minutes: GitHub LIVE ✅
+Tomorrow: .skill file READY ✅
+In 7 days: Marketplace LAUNCH 🎉
+
