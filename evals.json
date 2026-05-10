@@ -1,0 +1,86 @@
+{
+  "skill_name": "stallwache-deployment",
+  "skill_description": "Deploy a production-ready AI-powered calf birthing detection and cattle monitoring system",
+  "evals": [
+    {
+      "id": 0,
+      "name": "complete-deployment",
+      "prompt": "I have a Rollei Safetycam HD 20 at IP 192.168.178.108:80 and want to set up automated calf birthing detection with alerts. I already have Docker installed and want to deploy this to production. My camera credentials are username 'Stallwache123!' and password 'Stallwache123!'. I want Telegram alerts enabled. Walk me through the complete setup process step-by-step.",
+      "expected_output": "Comprehensive deployment walkthrough covering: (1) Hardware verification, (2) Kamera-Konfiguration, (3) Telegram Bot setup, (4) .env configuration creation, (5) Docker deployment, (6) System validation, (7) Monitoring setup. Should include actual commands to run and expected outputs at each step.",
+      "assertions": [
+        {
+          "name": "covers_kamera_validation",
+          "description": "Instructions include camera connectivity testing (test_camera.py or equivalent)"
+        },
+        {
+          "name": "includes_telegram_setup",
+          "description": "Step-by-step Telegram Bot creation and configuration (BotFather, token, chat-id)"
+        },
+        {
+          "name": "provides_docker_commands",
+          "description": "Includes actual Docker commands (docker-compose up -d, docker logs -f, etc.)"
+        },
+        {
+          "name": "deployment_verification",
+          "description": "Health check and verification steps (FPS check, database validation, etc.)"
+        },
+        {
+          "name": "troubleshooting_guidance",
+          "description": "Includes at least one troubleshooting tip or common issue"
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "name": "camera-integration",
+      "prompt": "I'm having trouble getting my camera stream to work. The RTSP URL is rtsp://192.168.178.108:554/stream and I have the credentials set up, but I'm getting 'Connection timeout' errors. What are the possible causes and how do I troubleshoot this step-by-step?",
+      "expected_output": "Systematic troubleshooting guide including: (1) Network connectivity checks (ping, port verification), (2) RTSP-specific validation (ffprobe, VLC testing), (3) Configuration verification, (4) Firewall/security checks, (5) Specific commands for each check with expected output.",
+      "assertions": [
+        {
+          "name": "network_diagnostics",
+          "description": "Includes network-level troubleshooting (ping, port checking)"
+        },
+        {
+          "name": "rtsp_specific_tools",
+          "description": "Mentions RTSP testing tools (ffprobe, VLC, or equivalent)"
+        },
+        {
+          "name": "configuration_verification",
+          "description": "Includes steps to verify .env configuration"
+        },
+        {
+          "name": "actionable_commands",
+          "description": "Provides actual executable commands for each troubleshooting step"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "performance-optimization",
+      "prompt": "My Stallwache system is using 85% CPU on a standard laptop and I want to reduce the load while maintaining detection accuracy. What are the performance tuning options and how do I implement them?",
+      "expected_output": "Performance optimization guide covering: (1) Frame-skip configuration, (2) Model size reduction (YOLOv8n/s vs m), (3) Resolution adjustments, (4) Hardware acceleration options, (5) Monitoring results after changes. Include specific configuration values and the trade-offs of each option.",
+      "assertions": [
+        {
+          "name": "frame_skip_option",
+          "description": "Explains FRAME_SKIP parameter and its effect on performance"
+        },
+        {
+          "name": "model_sizing",
+          "description": "Discusses YOLOv8 model variants and their performance characteristics"
+        },
+        {
+          "name": "resolution_tuning",
+          "description": "Covers RESIZE_WIDTH/RESIZE_HEIGHT adjustments"
+        },
+        {
+          "name": "tradeoffs_explained",
+          "description": "Explains the accuracy vs. performance trade-offs of each optimization"
+        },
+        {
+          "name": "monitoring_guidance",
+          "description": "Includes how to monitor improvements (FPS, CPU usage)"
+        }
+      ]
+    }
+  ]
+}

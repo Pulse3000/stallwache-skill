@@ -1,0 +1,144 @@
+version: '3.8'
+
+services:
+  stallwache:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: stallwache:latest
+    container_name: stallwache
+    restart: always
+
+    environment:
+      # Camera
+      CAMERA_RTSP_URL: ${CAMERA_RTSP_URL:-rtsp://192.168.1.200:554/stream}
+      CAMERA_USERNAME: ${CAMERA_USERNAME:-admin}
+      CAMERA_PASSWORD: ${CAMERA_PASSWORD:-12345}
+      FRAME_SKIP: ${FRAME_SKIP:-1}
+
+      # AI Model
+      YOLO_MODEL_PATH: ${YOLO_MODEL_PATH:-./models/yolov8m.pt}
+      CONFIDENCE_THRESHOLD: ${CONFIDENCE_THRESHOLD:-0.65}
+
+      # Telegram
+      ENABLE_TELEGRAM: ${ENABLE_TELEGRAM:-true}
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN}
+      TELEGRAM_CHAT_ID: ${TELEGRAM_CHAT_ID}
+      TELEGRAM_SEND_IMAGE: ${TELEGRAM_SEND_IMAGE:-true}
+      TELEGRAM_ALERT_COOLDOWN: ${TELEGRAM_ALERT_COOLDOWN:-60}
+
+      # Database
+      ENABLE_DATABASE: ${ENABLE_DATABASE:-true}
+      DATABASE_PATH: ${DATABASE_PATH:-./data/stallwache.db}
+      LOG_RETENTION_DAYS: ${LOG_RETENTION_DAYS:-30}
+
+      # Logging
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+      LOG_DIR: ${LOG_DIR:-./logs}
+      DEBUG_MODE: ${DEBUG_MODE:-false}
+
+      # System
+      DEVICE: ${DEVICE:-cpu}
+      NUM_WORKERS: ${NUM_WORKERS:-4}
+
+    volumes:
+      # Mount persistent data
+      - ./logs:/app/logs
+      - ./data:/app/data
+      - ./models:/app/models
+
+    ports:
+      # Metrics endpoint
+      - "8000:8000"
+
+    # Health check
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/metrics"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+    # Resource limits (production)
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4G
+        reservations:
+          cpus: '1'
+          memory: 2G
+
+    # Logging
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+    # Network
+    networks:
+      - stallwache-network
+
+    # Keep stdin open even if not attached
+    stdin_open: true
+    tty: true
+
+  # Optional: Prometheus for metrics collection
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: stallwache-prometheus
+    restart: always
+
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus_data:/prometheus
+
+    ports:
+      - "9090:9090"
+
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+
+    networks:
+      - stallwache-network
+
+    depends_on:
+      - stallwache
+
+    profiles:
+      - monitoring
+
+  # Optional: Grafana for dashboards
+  grafana:
+    image: grafana/grafana:latest
+    container_name: stallwache-grafana
+    restart: always
+
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: admin
+      GF_USERS_ALLOW_SIGN_UP: 'false'
+
+    volumes:
+      - ./grafana_data:/var/lib/grafana
+
+    ports:
+      - "3000:3000"
+
+    networks:
+      - stallwache-network
+
+    depends_on:
+      - prometheus
+
+    profiles:
+      - monitoring
+
+networks:
+  stallwache-network:
+    driver: bridge
+
+volumes:
+  prometheus_data:
+  grafana_data:

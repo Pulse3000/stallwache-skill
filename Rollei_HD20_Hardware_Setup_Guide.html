@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stallwache - Rollei HD 20 Hardware-Setup-Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 50px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .title-page {
+            text-align: center;
+            margin-bottom: 50px;
+            page-break-after: always;
+            border-bottom: 3px solid #2E75B6;
+            padding-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 48px;
+            color: #2E75B6;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 32px;
+            color: #2E75B6;
+            margin-bottom: 10px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .desc {
+            font-size: 14px;
+            font-style: italic;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .version {
+            font-size: 12px;
+            color: #999;
+            margin-top: 30px;
+        }
+
+        h2 {
+            font-size: 28px;
+            color: #2E75B6;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #2E75B6;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            font-size: 20px;
+            color: #404040;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+
+        ul {
+            margin-left: 25px;
+            margin-bottom: 15px;
+        }
+
+        ul li {
+            margin-bottom: 8px;
+        }
+
+        ol {
+            margin-left: 25px;
+            margin-bottom: 15px;
+        }
+
+        ol li {
+            margin-bottom: 8px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th {
+            background-color: #2E75B6;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        td {
+            padding: 12px;
+            border: 1px solid #ddd;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .code-block {
+            background-color: #f0f0f0;
+            border-left: 4px solid #2E75B6;
+            padding: 12px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+
+        .warning {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .info {
+            background-color: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .page-break {
+            page-break-after: always;
+            margin: 50px 0;
+        }
+
+        .checklist {
+            margin: 20px 0;
+        }
+
+        .checklist input[type="checkbox"] {
+            margin-right: 8px;
+        }
+
+        .checklist label {
+            display: block;
+            margin-bottom: 8px;
+            cursor: pointer;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+                max-width: 100%;
+            }
+            .page-break {
+                page-break-before: always;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Title Page -->
+        <div class="title-page">
+            <h1>STALLWACHE</h1>
+            <div class="subtitle">Hardware-Setup-Guide</div>
+            <div class="section-title">Rollei Safetycam HD 20 Integration</div>
+            <p class="desc">KI-basiertes Kalberkennungs- und Stallüberwachungssystem</p>
+            <p class="version">Version 1.0 | Mai 2026</p>
+        </div>
+
+        <!-- Section 1 -->
+        <div class="section">
+            <h2>1. Systemübersicht</h2>
+            <p>Das Stallwache-System besteht aus drei Hauptkomponenten:</p>
+            <ul>
+                <li><strong>Rollei Safetycam HD 20</strong> – Netzwerk-Überwachungskamera</li>
+                <li><strong>Edge-Server (lokaler PC/Laptop)</strong> – KI-Inferenz und Alert-Verarbeitung</li>
+                <li><strong>Rollei Cloud & Messenger</strong> – Backup-Speicher und Benachrichtigungen</li>
+            </ul>
+        </div>
+
+        <div class="page-break"></div>
+
+        <!-- Section 2 -->
+        <div class="section">
+            <h2>2. Rollei Safetycam HD 20 – Technische Spezifikationen</h2>
+
+            <h3>2.1 Hardware-Specs</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Wert</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Auflösung</td>
+                        <td>1920×1080 Pixel (Full HD)</td>
+                    </tr>
+                    <tr>
+                        <td>Framerate</td>
+                        <td>30 fps bei Full HD</td>
+                    </tr>
+                    <tr>
+                        <td>Sensor</td>
+                        <td>1/3″ CMOS</td>
+                    </tr>
+                    <tr>
+                        <td>Blickwinkel</td>
+                        <td>160° diagonal (Wide-Angle)</td>
+                    </tr>
+                    <tr>
+                        <td>Nachtsicht</td>
+                        <td>Infrarot-LEDs (bis 15m)</td>
+                    </tr>
+                    <tr>
+                        <td>Stromversorgung</td>
+                        <td>12V DC / PoE (Power over Ethernet)</td>
+                    </tr>
+                    <tr>
+                        <td>Wasserschutz</td>
+                        <td>IP66 (staub- und wasserdicht)</td>
+                    </tr>
+                    <tr>
+                        <td>Betriebstemp.</td>
+                        <td>-10°C bis +50°C</td>
+                    </tr>
+                    <tr>
+                        <td>Gewicht</td>
+                        <td>ca. 280g</td>
+                    </tr>
+                    <tr>
+                        <td>Abmessungen</td>
+                        <td>180×108×86 mm</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>2.2 Netzwerk-Features</h3>
+            <ul>
+                <li><strong>RTSP-Stream:</strong> <code>rtsp://[CAMERA_IP]:554/stream</code></li>
+                <li><strong>ONVIF-Support:</strong> Standardisierte Geräte-Integration</li>
+                <li><strong>HTTP-API:</strong> Web-Interface für Konfiguration</li>
+                <li><strong>Cloud-Integration:</strong> Automatische Uploads zur Rollei Cloud</li>
+                <li><strong>WiFi 802.11ac (5GHz/2.4GHz):</strong> oder Gigabit Ethernet</li>
+            </ul>
+        </div>
+
+        <div class="page-break"></div>
+
+        <!-- Section 3 -->
+        <div class="section">
+            <h2>3. Netzwerk-Konfiguration</h2>
+
+            <h3>3.1 Schritt 1: Kamera-Initialisierung</h3>
+            <ol>
+                <li>Stromversorgung anschließen (12V DC oder PoE-Switch)</li>
+                <li>Warten Sie 30 Sekunden auf Boot</li>
+                <li>LED sollte blau/grün blinken (Verbindung wird hergestellt)</li>
+                <li>Standardmäßig versucht die Kamera, sich über DHCP ins Netzwerk einzubuchen</li>
+            </ol>
+
+            <h3>3.2 IP-Adresse ermitteln</h3>
+
+            <h4>Methode A: Rollei Setup-App</h4>
+            <ol>
+                <li>Laden Sie die "Rollei SafetyCam" App herunter</li>
+                <li>App scannt automatisch das lokale Netzwerk nach der Kamera</li>
+                <li>Notieren Sie die angezeigte IP-Adresse (z.B. 192.168.1.100)</li>
+            </ol>
+
+            <h4>Methode B: Router-Admin-Panel</h4>
+            <ol>
+                <li>Öffnen Sie Ihren Router-Admin-Panel (meist 192.168.1.1 oder 192.168.0.1)</li>
+                <li>Navigieren Sie zu "Verbundene Geräte" oder "DHCP-Clients"</li>
+                <li>Suchen Sie nach einem Gerät namens "Rollei" oder mit MAC-Adresse beginnend mit 00:1A:AB</li>
+                <li>Notieren Sie die zugewiesene IP-Adresse</li>
+            </ol>
+
+            <h3>3.3 Statische IP-Adresse zuweisen</h3>
+            <p>Um zu verhindern, dass sich die Kamera-IP ändert:</p>
+            <ol>
+                <li>Öffnen Sie das Web-Interface der Kamera:
+                    <ul>
+                        <li>Browser → <code>http://[CAMERA_IP]</code></li>
+                        <li>Standard-Login: <code>admin</code> / <code>12345</code></li>
+                    </ul>
+                </li>
+                <li>Navigieren Sie zu Einstellungen → Netzwerk</li>
+                <li>Wählen Sie "Statische IP" statt DHCP</li>
+                <li><strong>Empfehlung:</strong> 192.168.1.200 (idealerweise außerhalb des DHCP-Bereichs)</li>
+                <li>Speichern und Kamera neu starten</li>
+            </ol>
+
+            <h3>3.4 RTSP-Stream testen</h3>
+            <p>Öffnen Sie einen VLC Media Player:</p>
+            <ol>
+                <li>Datei → Stream öffnen</li>
+                <li>URL eingeben:
+                    <div class="code-block">rtsp://admin:12345@192.168.1.200:554/stream</div>
+                </li>
+                <li>Wenn Video startet ✓ – RTSP funktioniert</li>
+            </ol>
+        </div>
+
+        <div class="page-break"></div>
+
+        <!-- Section 4 -->
+        <div class="section">
+            <h2>4. Kamera-Platzierung im Stall</h2>
+
+            <h3>4.1 Optimale Positionierung</h3>
+            <ul>
+                <li><strong>Höhe:</strong> 2–3m (übersichtlicher Blick auf Tier)</li>
+                <li><strong>Winkel:</strong> 45° nach unten gerichtet (Blick auf Flanke und Paar)</li>
+                <li><strong>Entfernung:</strong> 2–5m zum Kalb-Abkalbe-Bereich</li>
+                <li><strong>Vermeiden Sie:</strong> Gegenlicht, Reflektionen auf Sensor</li>
+            </ul>
+
+            <h3>4.2 Stromversorgung & Kabelführung</h3>
+            <ul>
+                <li>Verwenden Sie ein separates 12V-Netzteil oder PoE-Injektor</li>
+                <li>Kabelführung: Entlang der Stallwand (nicht über Tier-Bewegungsraum)</li>
+                <li>Netzwerk-Kabel (Cat5e/Cat6): Min. 10m Reichweite üblich</li>
+                <li>Empfehlung: Versorgungsleitungen mit Schutzkanal schützen</li>
+            </ul>
+
+            <h3>4.3 Lichtverhältnisse</h3>
+            <ul>
+                <li><strong>Tagsüber:</strong> Natürliches Licht ausreichend</li>
+                <li><strong>Nachts:</strong> IR-LEDs der Kamera reichen bis 15m</li>
+                <li><strong>Optional:</strong> Zusätzliche IR-Beleuchtung (880nm) für verbesserte Erkennung</li>
+            </ul>
+        </div>
+
+        <!-- Section 5 -->
+        <div class="section">
+            <h2>5. Edge-Server (Lokaler PC) – Anforderungen</h2>
+
+            <h3>5.1 Mindestanforderungen</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Komponente</th>
+                        <th>Anforderung</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>CPU</td>
+                        <td>Intel i5/i7 oder AMD Ryzen 5/7 (mind. 4 Cores)</td>
+                    </tr>
+                    <tr>
+                        <td>RAM</td>
+                        <td>8 GB (16 GB empfohlen für YOLOv8)</td>
+                    </tr>
+                    <tr>
+                        <td>GPU</td>
+                        <td>Optional: NVIDIA GPU (RTX 3060 oder besser)</td>
+                    </tr>
+                    <tr>
+                        <td>Speicher</td>
+                        <td>250 GB SSD (für Logs, Modelle, Puffer)</td>
+                    </tr>
+                    <tr>
+                        <td>OS</td>
+                        <td>Windows 10/11, Linux (Ubuntu 20.04+), macOS 11+</td>
+                    </tr>
+                    <tr>
+                        <td>Netzwerk</td>
+                        <td>Gigabit Ethernet oder 5GHz WiFi</td>
+                    </tr>
+                    <tr>
+                        <td>RAM-Auslastung</td>
+                        <td>~2–4 GB während KI-Verarbeitung</td>
+                    </tr>
+                    <tr>
+                        <td>CPU-Auslastung</td>
+                        <td>~30–60% bei 30fps 1080p Inferenz</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>5.2 Software-Setup</h3>
+            <ol>
+                <li><strong>Python 3.10+</strong> installieren</li>
+                <li><strong>Dependencies:</strong>
+                    <ul>
+                        <li>opencv-python (Video-Stream)</li>
+                        <li>ultralytics (YOLOv8)</li>
+                        <li>python-telegram-bot (Messenger-Integration)</li>
+                        <li>requests (HTTP-Requests)</li>
+                    </ul>
+                </li>
+                <li>Installation: <div class="code-block">pip install opencv-python ultralytics python-telegram-bot requests</div></li>
+            </ol>
+        </div>
+
+        <div class="page-break"></div>
+
+        <!-- Section 6 -->
+        <div class="section">
+            <h2>6. Netzwerk-Architektur</h2>
+
+            <h3>6.1 Topologie</h3>
+            <div class="info">
+                <pre>Internet
+    ↓
+Router (5GHz WiFi / Gigabit Ethernet)
+    ↓
+┌─────────────────────────────────┐
+│  Rollei Safetycam HD 20         │ → RTSP Stream (192.168.1.200:554)
+│  IP: 192.168.1.200              │
+└─────────────────────────────────┘
+    ↓ (LAN)
+┌─────────────────────────────────┐
+│  Edge-Server (PC/Laptop)        │ → YOLOv8 Inferenz
+│  IP: 192.168.1.50               │ → Telegram Alerts
+└─────────────────────────────────┘
+    ↓ (Cloud API)
+┌─────────────────────────────────┐
+│  Rollei Cloud                   │ → Backup-Videos
+│  Telegram / WhatsApp            │ → Push-Benachrichtigungen
+└─────────────────────────────────┘</pre>
+            </div>
+
+            <h3>6.2 Bandbreitenanforderungen</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Komponente</th>
+                        <th>Bandbreite</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1080p @ 30fps</td>
+                        <td>~4 Mbps (komprimiert H.264)</td>
+                    </tr>
+                    <tr>
+                        <td>Cloud-Backup (intermittent)</td>
+                        <td>~10 Mbps Peak</td>
+                    </tr>
+                    <tr>
+                        <td>Messenger-Alerts</td>
+                        <td>&lt;1 Mbps</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Gesamtbedarf</strong></td>
+                        <td><strong>~15 Mbps (typisch), 20+ Mbps Peak</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+            <p><strong>Empfehlung:</strong> 25+ Mbps Internetverbindung für stabile Verarbeitung</p>
+        </div>
+
+        <div class="page-break"></div>
+
+        <!-- Section 7 -->
+        <div class="section">
+            <h2>7. Sicherheit & Datenschutz</h2>
+
+            <h3>7.1 Kamera-Sicherheit</h3>
+            <ul>
+                <li><strong>Standard-Passwort ändern!</strong> Web-Interface: <code>admin</code> → [Sicheres Passwort]</li>
+                <li><strong>Firewall-Regel:</strong> Kamera nur im lokalen Netzwerk erreichbar</li>
+                <li><strong>RTSP-Authentifizierung:</strong> Credentials im Stream verwenden</li>
+                <li><strong>Firmware aktuell halten:</strong> Rollei-Sicherheits-Updates regelmäßig prüfen</li>
+            </ul>
+
+            <h3>7.2 Daten-Speicherung & Backup</h3>
+            <ul>
+                <li><strong>Lokale Videobuffer:</strong> 24h = ~400 GB (1080p @ 1 Mbps durchschnittlich)</li>
+                <li><strong>Rollei Cloud:</strong> Tagesübersicht + Alert-Trigger-Videos</li>
+                <li><strong>Retention-Policy:</strong> Lokal 7 Tage, Cloud 30 Tage</li>
+            </ul>
+
+            <h3>7.3 DSGVO & Datenschutz</h3>
+            <ul>
+                <li>Video-Verarbeitung ist lokal (kein direkter Cloud-Stream ohne Zustimmung)</li>
+                <li>Nur Tier-Bilder werden analysiert (keine Erfassung von Personen)</li>
+                <li>Optional: VPN-Tunnel zur Cloud für verschlüsselte Backup-Übertragung</li>
+            </ul>
+        </div>
+
+        <!-- Section 8 -->
+        <div class="section">
+            <h2>8. Troubleshooting</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Problem</th>
+                        <th>Lösung</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Kamera antwortet nicht</td>
+                        <td>1) Stromversorgung prüfen<br>2) Router neu starten<br>3) Kamera neu booten (Power-Knopf 10s)</td>
+                    </tr>
+                    <tr>
+                        <td>RTSP-Stream stützt ab</td>
+                        <td>1) Netzwerk-Stabilität prüfen (Ping zur Kamera)<br>2) WiFi → Ethernet wechseln<br>3) PC-Firewall-Einstellungen prüfen</td>
+                    </tr>
+                    <tr>
+                        <td>Niedriges Video-FPS</td>
+                        <td>1) Edge-Server-Ressourcen (CPU/RAM) überprüfen<br>2) Streaming-Qualität im Web-Interface reduzieren<br>3) GPU beschleunigung aktivieren (falls vorhanden)</td>
+                    </tr>
+                    <tr>
+                        <td>Cloud-Upload schlägt fehl</td>
+                        <td>1) Rollei-Cloud-Login prüfen<br>2) Internetverbindung testen<br>3) Cloud-Speicherplatz überprüfen</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="page-break"></div>
+
+        <!-- Section 9 -->
+        <div class="section">
+            <h2>9. Installation Checkliste</h2>
+
+            <h3>Hardware</h3>
+            <div class="checklist">
+                <label><input type="checkbox"> Rollei Safetycam HD 20 ausgepackt</label>
+                <label><input type="checkbox"> 12V Netzteil / PoE-Injektor angeschlossen</label>
+                <label><input type="checkbox"> Netzwerk-Kabel verlegt</label>
+                <label><input type="checkbox"> Kamera-Halterung im Stall montiert</label>
+            </div>
+
+            <h3>Netzwerk</h3>
+            <div class="checklist">
+                <label><input type="checkbox"> Kamera-IP ermittelt</label>
+                <label><input type="checkbox"> Statische IP konfiguriert</label>
+                <label><input type="checkbox"> RTSP-Stream in VLC getestet</label>
+                <label><input type="checkbox"> Firewall-Regel hinzugefügt</label>
+                <label><input type="checkbox"> Standard-Passwort geändert</label>
+            </div>
+
+            <h3>Edge-Server</h3>
+            <div class="checklist">
+                <label><input type="checkbox"> Python 3.10+ installiert</label>
+                <label><input type="checkbox"> Dependencies installiert</label>
+                <label><input type="checkbox"> YOLOv8-Modell heruntergeladen</label>
+                <label><input type="checkbox"> Telegram Bot-Token konfiguriert</label>
+            </div>
+        </div>
+
+        <!-- Final Section -->
+        <div class="section">
+            <h2>Nächste Schritte</h2>
+            <p>Nach erfolgreicher Hardware-Installation:</p>
+            <ol>
+                <li>Konsultieren Sie den <strong>Python-Code-Guide</strong> für KI-Inferenz</li>
+                <li><strong>Docker-Container</strong> für einfaches Deployment aufsetzen</li>
+                <li>Testen Sie die <strong>Kalberkennungs-Modelle</strong> mit Testvideos</li>
+                <li><strong>Fine-Tune</strong> das Alert-Schwellenwert-System basierend auf echten Stallbedingungen</li>
+            </ol>
+        </div>
+
+        <!-- Support -->
+        <div class="info" style="text-align: center; margin-top: 50px;">
+            <p><strong>Support & Kontakt</strong></p>
+            <p>Fragen oder Probleme? Kontaktieren Sie: <strong>stallwache123@gmail.com</strong></p>
+        </div>
+    </div>
+
+    <script>
+        // Print-friendly styles
+        window.addEventListener('beforeprint', function() {
+            document.querySelectorAll('.page-break').forEach(el => {
+                el.style.pageBreakBefore = 'always';
+            });
+        });
+    </script>
+</body>
+</html>

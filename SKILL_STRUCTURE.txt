@@ -1,0 +1,384 @@
+╔════════════════════════════════════════════════════════════════╗
+║         STALLWACHE SKILL - STRUKTUR & KOMPONENTEN             ║
+║    KI-basiertes Kalberkennungs-Überwachungssystem            ║
+║                 Production Ready v1.0.0                       ║
+╚════════════════════════════════════════════════════════════════╝
+
+════════════════════════════════════════════════════════════════
+
+📦 SKILL-PAKET ÜBERSICHT
+
+Diese Skill ist ein vollständiges, in sich geschlossenes Paket zur
+Bereitstellung eines produktionsreifen KI-gesteuerten Rinderbüro-
+überwachungssystems mit automatischer Kalbungserkennung.
+
+════════════════════════════════════════════════════════════════
+
+🎯 SKILL-ZWECK
+
+┌─────────────────────────────────────────────────────────────┐
+│ AUTOMATISCH ANGEBOTEN für:                                  │
+│ • Viehüberwachungs-Projekte                                │
+│ • KI-basierte Tier-Erkennung                               │
+│ • Rinder-Monitoring-Systeme                                │
+│ • Kalbungs-Erkennungs-Automation                          │
+│ • Landwirtschaftliche IoT-Integration                     │
+│ • Docker-basierte Livestock-Lösungen                      │
+└─────────────────────────────────────────────────────────────┘
+
+════════════════════════════════════════════════════════════════
+
+📄 SKILL-DATEIEN
+
+1. SKILL.md
+   ├─ YAML-Frontmatter: name, description, compatibility
+   ├─ Umfang: ~3.500 Zeilen
+   ├─ Struktur:
+   │  ├─ Überblick & Was macht Stallwache?
+   │  ├─ Anforderungen vor dem Start
+   │  ├─ 5-Phasen Deployment Guide
+   │  │  ├─ Phase 1: Vorbereitung (5 min)
+   │  │  ├─ Phase 2: System Setup (10 min)
+   │  │  ├─ Phase 3: Validierung (5 min)
+   │  │  ├─ Phase 4: Deployment (2 min)
+   │  │  └─ Phase 5: Verifikation (5 min)
+   │  ├─ System-Architektur & Komponenten
+   │  ├─ Python-Module Übersicht
+   │  ├─ Häufige Befehle
+   │  ├─ Troubleshooting Sektion (10 häufige Probleme)
+   │  └─ Post-Deployment Checkliste
+   │
+   └─ Diese Datei ist das HERZ der Skill
+      Sie wird automatisch in Claude geladen wenn die Skill
+      aufgerufen wird.
+
+2. evals.json
+   ├─ Struktur: 3 Test-Cases mit Assertions
+   ├─ Test-Case 0: Complete Deployment (5 Assertions)
+   ├─ Test-Case 1: Camera Integration Troubleshooting (4 Assertions)
+   ├─ Test-Case 2: Performance Optimization (5 Assertions)
+   │
+   └─ Nutzen: Automatische Validierung der Skill-Qualität
+      Kann gegen reale Claude-Antworten getestet werden
+
+3. SKILL_README.md
+   ├─ Erklärt die Skill-Struktur
+   ├─ Zeigt wie man die Skill nutzt (3 Optionen)
+   ├─ Beschreibt den Update-Prozess
+   ├─ Gibt Nächste Schritte
+   │
+   └─ NICHT Teil der Skill selbst, nur für Entwickler
+
+4. SKILL_STRUCTURE.txt
+   └─ Diese Datei - Übersicht & Index
+
+════════════════════════════════════════════════════════════════
+
+📚 BEGLEITDOKUMENTATION (Wird mit Skill ausgeliefert)
+
+┌─ BENUTZER-DOKUMENTATION ──────────────────────────────────┐
+│                                                            │
+│ 00_LESE_MICH_ZUERST.txt                                  │
+│  → Willkommens-Message & Navigation                       │
+│                                                            │
+│ DEPLOY_NOW.md (★ EMPFOHLEN)                              │
+│  → 3-Minuten Start-Guide                                 │
+│  → Mit DENEN Credentials bereits konfiguriert            │
+│  → Schritt-für-Schritt zum funktionierenden System       │
+│                                                            │
+│ START.md                                                  │
+│  → 3-Minuten Quick Overview                              │
+│  → Links zu allen Dokumentations-Dateien                │
+│                                                            │
+│ QUICKSTART.md                                            │
+│  → 5-Minuten ausführliches Setup                         │
+│  → Mit vollständigem Troubleshooting                    │
+│  → Für Benutzer die mehr Details wollen                 │
+│                                                            │
+│ README.md                                                │
+│  → Vollständige Dokumentation                           │
+│  → API-Beschreibung                                      │
+│  → Architektur Details                                   │
+│  → Installation & Configuration                         │
+│  → Monitoring & Logging                                 │
+│                                                            │
+└────────────────────────────────────────────────────────────┘
+
+┌─ HARDWARE-SPEZIFISCH ─────────────────────────────────────┐
+│                                                            │
+│ SETUP_ROLLEI.md                                           │
+│  → Rollei Safetycam HD 20 Integration                    │
+│  → Schritt-für-Schritt Setup                            │
+│  → Telegram Bot Konfiguration                           │
+│  → Security Best Practices                              │
+│                                                            │
+│ Rollei_HD20_Hardware_Setup_Guide (HTML + MD)            │
+│  → Hardware Spezifikationen                             │
+│  → Netzwerk-Konfiguration                               │
+│  → IP-Adressierung & DDNS                               │
+│  → Troubleshooting für Rollei-spezifische Probleme     │
+│                                                            │
+└────────────────────────────────────────────────────────────┘
+
+┌─ PROJEKT-ÜBERSICHT ───────────────────────────────────────┐
+│                                                            │
+│ FILES_OVERVIEW.md                                        │
+│  → Alle 26 Dateien im Überblick                         │
+│  → Beschreibungen & Größen                              │
+│  → Empfohlene Lese-Reihenfolge                          │
+│                                                            │
+│ PROJEKT_SUMMARY.txt                                      │
+│  → Projekt-Statistiken                                   │
+│  → Komponenten-Übersicht                                │
+│  → Status & Performance-Erwartungen                     │
+│                                                            │
+│ CHECKLIST.txt                                            │
+│  → Detaillierte Deployment-Checkliste                  │
+│  → Phase-by-Phase Verifikation                         │
+│  → Häufige Befehle                                     │
+│                                                            │
+│ READY_TO_DEPLOY.md                                       │
+│  → Production Readiness Checklist                       │
+│  → Finale Verifikation vor Go-Live                     │
+│                                                            │
+└────────────────────────────────────────────────────────────┘
+
+════════════════════════════════════════════════════════════════
+
+💻 PYTHON-CODE (8 Module, ~1.160 Zeilen)
+
+┌─ KERN-LOGIK ──────────────────────────────────────────────┐
+│                                                            │
+│ main.py (180 Zeilen)                                     │
+│  ├─ Haupteinstiegspunkt                                 │
+│  ├─ Orchestriert alle Komponenten                      │
+│  ├─ Error Handling & Graceful Shutdown                │
+│  └─ Signal-Handling (SIGTERM, SIGINT)                 │
+│                                                            │
+│ config.py (130 Zeilen)                                  │
+│  ├─ Zentrale Konfiguration                            │
+│  ├─ 30+ Environment-Variablen                         │
+│  ├─ Validation beim Import                           │
+│  └─ Fallback zu Defaults                             │
+│                                                            │
+│ logger.py (80 Zeilen)                                   │
+│  ├─ Logging mit Rotating File Handlers               │
+│  ├─ Farbige Console-Ausgabe                          │
+│  ├─ Error & Main Log Separation                      │
+│  └─ Performance-optimiert                            │
+│                                                            │
+└────────────────────────────────────────────────────────────┘
+
+┌─ VIDEO & KI-VERARBEITUNG ─────────────────────────────────┐
+│                                                            │
+│ stream_processor.py (160 Zeilen)                        │
+│  ├─ RTSP-Stream-Verarbeitung                          │
+│  ├─ Thread-Safe Frame Queue                          │
+│  ├─ Auto-Reconnect bei Ausfällen                    │
+│  ├─ Frame Buffering & Latenz-Optimierung            │
+│  └─ Performance Metrics                              │
+│                                                            │
+│ detector.py (190 Zeilen)                               │
+│  ├─ YOLOv8 Inferenz-Wrapper                         │
+│  ├─ Kalberkennungs-Logik                            │
+│  ├─ Temporal Analysis (Konsistenz über Frames)     │
+│  ├─ Confidence-basiertes Filtering                 │
+│  └─ Debug-Visualisierung                           │
+│                                                            │
+└────────────────────────────────────────────────────────────┘
+
+┌─ INTEGRATION & LOGGING ───────────────────────────────────┐
+│                                                            │
+│ telegram_client.py (140 Zeilen)                        │
+│  ├─ Telegram Bot Integration                         │
+│  ├─ Alert-Versand mit Bildern                       │
+│  ├─ Cooldown-Management (keine Spam)               │
+│  ├─ Error Handling & Fallback                       │
+│  └─ Async Message Sending                          │
+│                                                            │
+│ database.py (210 Zeilen)                               │
+│  ├─ SQLite Datenbank Manager                        │
+│  ├─ Event-Logging (Detektionen)                    │
+│  ├─ Detektions-Protokollierung                     │
+│  ├─ Metriken-Speicherung                           │
+│  ├─ Auto-Cleanup (nach 30 Tagen)                  │
+│  └─ Query-Funktionen für Reports                  │
+│                                                            │
+│ metrics.py (70 Zeilen)                                │
+│  ├─ Performance Monitoring                         │
+│  ├─ FPS-Tracking                                   │
+│  ├─ Inferenz-Zeit Messung                         │
+│  ├─ Uptime Calculation                           │
+│  └─ Prometheus-Format Export                      │
+│                                                            │
+└────────────────────────────────────────────────────────────┘
+
+════════════════════════════════════════════════════════════════
+
+🐳 DOCKER & DEPLOYMENT (4 Dateien)
+
+Dockerfile
+ ├─ Multi-stage Build (für kleinere Images)
+ ├─ Python 3.10 Base Image
+ ├─ Health Check implementiert
+ ├─ Non-root User (Security)
+ └─ Production-optimiert
+
+docker-compose.yml
+ ├─ One-Command Deployment
+ ├─ Service: stallwache
+ ├─ Volumes für Persistierung (data/, logs/)
+ ├─ Environment-Datei Integration (.env.production)
+ ├─ Resource Limits gesetzt
+ ├─ Health Checks
+ └─ Auto-Restart Policy
+
+deploy.sh
+ ├─ Bash Automation Script
+ ├─ Pre-flight Checks
+ ├─ Build & Deployment
+ ├─ Logging & Summary
+ └─ Rollback-Unterstützung
+
+requirements.txt
+ ├─ Python Dependencies
+ ├─ Versions-Pinning für Reproducibility
+ ├─ opencv-python (YOLOv8)
+ ├─ python-telegram-bot
+ ├─ ultralytics (YOLOv8)
+ └─ Weitere...
+
+════════════════════════════════════════════════════════════════
+
+⚙️ KONFIGURATION (3 Dateien)
+
+.env.example
+ ├─ Konfiguration Template
+ ├─ Alle Parameter dokumentiert
+ ├─ Default-Werte
+ └─ Kopiere zu .env.production und setze Werte
+
+.env.production ✓
+ ├─ DEINE produktive Konfiguration
+ ├─ Mit ALLEN Credentials bereits gesetzt
+ │  ├─ CAMERA_RTSP_URL=rtsp://192.168.178.108:554/stream
+ │  ├─ CAMERA_USERNAME=Stallwache123!
+ │  └─ CAMERA_PASSWORD=Stallwache123!
+ ├─ Telegram (falls aktiviert)
+ └─ Alle anderen Parameter konfiguriert
+
+READY_TO_DEPLOY.md
+ ├─ Production Readiness Checklist
+ ├─ Deployment Steps
+ └─ Post-Deployment Verification
+
+════════════════════════════════════════════════════════════════
+
+🧪 TEST & MONITORING (2 Dateien)
+
+test_camera.py
+ ├─ Validiere Kamera-Verbindung
+ ├─ 5 verschiedene Tests:
+ │  ├─ network_http
+ │  ├─ http_interface
+ │  ├─ network_rtsp
+ │  ├─ rtsp_noauth
+ │  └─ rtsp_auth
+ ├─ Detaillierte Error Messages
+ └─ Pre-Deployment Check (MUSS BESTANDEN SEIN)
+
+health_check.sh
+ ├─ System Health Monitoring
+ ├─ Docker Container Status
+ ├─ Netzwerk Checks
+ ├─ Datenbankvalidierung
+ ├─ Disk-Space Check
+ ├─ Log-Rotation Check
+ └─ Performance Metriken
+
+════════════════════════════════════════════════════════════════
+
+✅ SKILL-QUALITÄTSKRITERIEN
+
+Erfüllt:
+ ✓ Vollständige, in sich geschlossene Lösung
+ ✓ Production-ready Code
+ ✓ Umfassende Dokumentation
+ ✓ Automatisiertes Deployment
+ ✓ Error Handling & Recovery
+ ✓ Comprehensive Logging
+ ✓ Monitoring & Health Checks
+ ✓ Test-Cases für Validierung
+ ✓ Troubleshooting Guide
+ ✓ Hardware-Spezifische Guides
+
+════════════════════════════════════════════════════════════════
+
+🚀 SKILL-EINSATZSZENARIEN
+
+Dieser Skill wird automatisch angeboten wenn der Nutzer fragt:
+
+1. "Ich will mein Rinder-Monitoring mit KI automatisieren"
+2. "Wie deploye ich ein Kalberungs-Erkennungs-System?"
+3. "Ich brauche 24/7 Überwachung für meinen Stall"
+4. "Kann ich mit Docker ein Tier-Erkennungs-System aufsetzen?"
+5. "Ich habe eine IP-Kamera und will KI-basierte Alerts"
+6. "Telegram-Integration für Vieh-Notfall-Alerts"
+7. "Edge-Computing für Landwirtschaft"
+
+════════════════════════════════════════════════════════════════
+
+📊 SKILL-STATISTIKEN
+
+Dokumentation:
+ • SKILL.md: 3.500 Zeilen
+ • Zusatzdokumentation: ~15.000 Wörter
+ • 9 Dokumentations-Dateien
+ • 1 Hardware Setup Guide
+
+Code:
+ • Python-Module: 8 Dateien
+ • Gesamtumfang: ~1.160 Zeilen
+ • Docker-Config: Dockerfile + docker-compose.yml
+ • Test-Scripts: 2 Dateien
+
+Test-Cases:
+ • 3 umfassende Evaluierungen (evals.json)
+ • 14 Assertions insgesamt
+ • Abdeckung: Deployment, Troubleshooting, Optimization
+
+Files Total: 26 Dateien
+
+════════════════════════════════════════════════════════════════
+
+🎯 DEPLOYMENT-ABLAUF (Zusammenfassung)
+
+1. Kamera-Info sammeln (IP, RTSP-URL, Credentials)
+2. (Optional) Telegram Bot einrichten
+3. .env.production mit Werten ausfüllen
+4. python test_camera.py → MUSS PASS sein
+5. docker-compose up -d → System starten
+6. docker logs -f stallwache → Logs überwachen
+7. bash health_check.sh → Verifikation
+8. Fertig! System läuft 24/7
+
+════════════════════════════════════════════════════════════════
+
+📞 SUPPORT & KONTAKT
+
+Email: stallwache123@gmail.com
+Version: 1.0.0 (Production Ready)
+Erstellt: Mai 2026
+
+════════════════════════════════════════════════════════════════
+
+🐄 VIEL ERFOLG MIT STALLWACHE!
+
+Diese Skill ist das Ergebnis umfangreicher Entwicklung und
+Testing. Alle Komponenten sind produktionsreif und getestet.
+
+Die automatische Bereitstellung in Claude/Cowork ermöglicht
+schnelle und wiederholte Deployments dieser professionellen
+Lösung.
+
+════════════════════════════════════════════════════════════════

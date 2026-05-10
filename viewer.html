@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🐄 Stallwache – Live Kamera</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0a0e1a;
+    color: #e8eaf0;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+  header {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 20px; width: 100%; max-width: 1200px;
+  }
+  header h1 { font-size: 1.4rem; font-weight: 800; color: #4ade80; }
+  header .sub { font-size: 0.8rem; color: #6b7280; }
+  .status-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: #4ade80; animation: pulse 2s infinite;
+    flex-shrink: 0;
+  }
+  .status-dot.offline { background: #f87171; animation: none; }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; } 50% { opacity: 0.4; }
+  }
+
+  .video-container {
+    width: 100%; max-width: 1200px;
+    background: #111827;
+    border: 2px solid #1f2937;
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+  }
+  video {
+    width: 100%; display: block;
+    min-height: 200px; background: #000;
+  }
+  .overlay {
+    position: absolute; top: 12px; left: 12px;
+    display: flex; gap: 8px; flex-wrap: wrap;
+  }
+  .badge {
+    background: rgba(0,0,0,0.7);
+    border: 1px solid #374151;
+    padding: 4px 10px; border-radius: 20px;
+    font-size: 0.72rem; font-weight: 600;
+  }
+  .badge.live { border-color: #4ade80; color: #4ade80; }
+  .badge.night { border-color: #60a5fa; color: #60a5fa; }
+
+  .controls {
+    width: 100%; max-width: 1200px;
+    display: flex; gap: 10px; margin-top: 12px;
+    flex-wrap: wrap;
+  }
+  .btn {
+    padding: 9px 18px; border-radius: 8px;
+    border: 1px solid #1f2937; background: #111827;
+    color: #e8eaf0; font-size: 0.85rem; cursor: pointer;
+    transition: all 0.2s; font-weight: 600;
+  }
+  .btn:hover { background: #1f2937; border-color: #374151; }
+  .btn.primary { background: #14532d; border-color: #4ade80; color: #4ade80; }
+  .btn.primary:hover { background: #166534; }
+  .btn.danger { background: #7f1d1d; border-color: #f87171; color: #f87171; }
+
+  .info-row {
+    width: 100%; max-width: 1200px;
+    display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap;
+  }
+  .info-box {
+    flex: 1; min-width: 160px;
+    background: #111827; border: 1px solid #1f2937;
+    border-radius: 10px; padding: 12px 16px;
+  }
+  .info-box .val { font-size: 1.4rem; font-weight: 800; color: #4ade80; }
+  .info-box .lbl { font-size: 0.7rem; color: #6b7280; margin-top: 3px; }
+
+  .protocol-tabs {
+    width: 100%; max-width: 1200px;
+    display: flex; gap: 8px; margin-bottom: 12px;
+  }
+  .tab {
+    padding: 7px 16px; border-radius: 8px;
+    border: 1px solid #1f2937; background: #111827;
+    color: #6b7280; font-size: 0.82rem; cursor: pointer;
+    font-weight: 600;
+  }
+  .tab.active { background: #14532d; border-color: #4ade80; color: #4ade80; }
+
+  .error-msg {
+    background: #7f1d1d; border: 1px solid #f87171;
+    border-radius: 10px; padding: 14px 18px;
+    margin-top: 12px; display: none;
+    width: 100%; max-width: 1200px;
+  }
+  .error-msg.show { display: block; }
+
+  .url-row {
+    width: 100%; max-width: 1200px;
+    background: #0f172a; border: 1px solid #1f2937;
+    border-radius: 10px; padding: 12px 16px;
+    font-family: monospace; font-size: 0.82rem;
+    color: #a5f3fc; margin-top: 8px;
+    word-break: break-all;
+  }
+
+  footer {
+    margin-top: 24px; color: #374151; font-size: 0.72rem;
+    width: 100%; max-width: 1200px; text-align: center;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="status-dot" id="statusDot"></div>
+  <div>
+    <h1>🐄 Stallwache – Live Kamera</h1>
+    <div class="sub" id="statusText">Verbinde ...</div>
+  </div>
+  <div style="margin-left:auto; font-size:0.8rem; color:#6b7280;" id="clock"></div>
+</header>
+
+<!-- Protocol Tabs -->
+<div class="protocol-tabs">
+  <button class="tab active" onclick="switchProtocol('webrtc')" id="tab-webrtc">⚡ WebRTC (live)</button>
+  <button class="tab" onclick="switchProtocol('hls')" id="tab-hls">📱 HLS (Handy)</button>
+  <button class="tab" onclick="switchProtocol('mjpeg')" id="tab-mjpeg">🎞️ MJPEG (lokal)</button>
+</div>
+
+<!-- Video Player -->
+<div class="video-container">
+  <video id="videoPlayer" autoplay muted playsinline controls></video>
+  <div class="overlay">
+    <span class="badge live" id="liveBadge">● LIVE</span>
+    <span class="badge" id="camBadge">📷 Abkalbebox_1</span>
+    <span class="badge night" id="nightBadge" style="display:none">🌙 Nacht</span>
+  </div>
+</div>
+
+<!-- Error -->
+<div class="error-msg" id="errorMsg">
+  ⚠️ Stream nicht erreichbar. Prüfe ob Edge-PC und VPS laufen.
+</div>
+
+<!-- Controls -->
+<div class="controls">
+  <button class="btn primary" onclick="reconnect()">🔄 Neu verbinden</button>
+  <button class="btn" onclick="toggleFullscreen()">⛶ Vollbild</button>
+  <button class="btn" onclick="takeSnapshot()">📸 Snapshot</button>
+  <button class="btn danger" onclick="location.href='/dashboard'">📊 Dashboard</button>
+</div>
+
+<!-- Stream URL -->
+<div class="url-row" id="currentUrl">Lade Stream-URL ...</div>
+
+<!-- Info Boxes -->
+<div class="info-row">
+  <div class="info-box">
+    <div class="val" id="resolutionVal">–</div>
+    <div class="lbl">Auflösung</div>
+  </div>
+  <div class="info-box">
+    <div class="val" id="fpsVal">–</div>
+    <div class="lbl">FPS</div>
+  </div>
+  <div class="info-box">
+    <div class="val" id="latencyVal">–</div>
+    <div class="lbl">Latenz</div>
+  </div>
+  <div class="info-box">
+    <div class="val" id="uptimeVal">–</div>
+    <div class="lbl">Verbunden seit</div>
+  </div>
+</div>
+
+<footer>
+  Stallwache v1.0 · MediaMTX Stream Server · Rollei SafetyCam 20 HD<br>
+  WebRTC: kein Port-Forwarding nötig · Ende-zu-Ende verschlüsselt
+</footer>
+
+<script>
+  // ── Konfiguration ──────────────────────────────────────────────────────
+  // VPS_IP wird beim Laden automatisch erkannt (same-origin)
+  const VPS_HOST  = window.location.hostname;
+  const STREAM_ID = "stallwache";
+
+  const URLS = {
+    webrtc: `http://${VPS_HOST}:8889/${STREAM_ID}/`,
+    hls:    `http://${VPS_HOST}:8888/${STREAM_ID}/index.m3u8`,
+    mjpeg:  `http://192.168.178.108/videostream.cgi?user=Stallwache123!&pwd=Stallwache123!&resolution=1280x720`,
+  };
+
+  let currentProtocol = "webrtc";
+  let connectTime     = null;
+  let hlsInstance     = null;
+
+  const video      = document.getElementById("videoPlayer");
+  const statusDot  = document.getElementById("statusDot");
+  const statusText = document.getElementById("statusText");
+  const errorMsg   = document.getElementById("errorMsg");
+  const urlRow     = document.getElementById("currentUrl");
+
+  // ── Uhr ────────────────────────────────────────────────────────────────
+  function updateClock() {
+    const now = new Date();
+    document.getElementById("clock").textContent =
+      now.toLocaleDateString("de-DE") + " " + now.toLocaleTimeString("de-DE");
+    // Nacht-Modus 22:00–06:00
+    const h = now.getHours();
+    document.getElementById("nightBadge").style.display =
+      (h >= 22 || h < 6) ? "inline" : "none";
+  }
+  setInterval(updateClock, 1000);
+  updateClock();
+
+  // ── Protokoll wechseln ─────────────────────────────────────────────────
+  function switchProtocol(proto) {
+    currentProtocol = proto;
+    document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+    document.getElementById(`tab-${proto}`).classList.add("active");
+    loadStream();
+  }
+
+  // ── Stream laden ───────────────────────────────────────────────────────
+  function loadStream() {
+    errorMsg.classList.remove("show");
+    const url = URLS[currentProtocol];
+    urlRow.textContent = url;
+    connectTime = Date.now();
+
+    if (currentProtocol === "webrtc") {
+      loadWebRTC(url);
+    } else if (currentProtocol === "hls") {
+      loadHLS(url);
+    } else {
+      loadMJPEG(url);
+    }
+  }
+
+  // ── WebRTC (MediaMTX built-in) ─────────────────────────────────────────
+  function loadWebRTC(url) {
+    // MediaMTX hat eine eingebaute WebRTC-Seite — wir laden sie per iframe
+    // oder nutzen den nativen MediaSource direkt
+    statusText.textContent = "WebRTC verbindet ...";
+
+    // Redirect zur MediaMTX WebRTC Seite
+    // (kann auch direkt als <iframe> eingebettet werden)
+    video.src = "";
+    video.poster = "";
+
+    // Einfachster Weg: MediaMTX WebRTC URL direkt
+    fetch(url.replace("8889", "9997") + "api/v3/paths/list")
+      .then(r => r.json())
+      .then(data => {
+        const paths = data?.items || [];
+        const active = paths.find(p => p.name === STREAM_ID);
+        if (active) {
+          setOnline();
+          // WebRTC über eingebettetes iframe
+          const container = video.parentElement;
+          let iframe = document.getElementById("webrtcFrame");
+          if (!iframe) {
+            iframe = document.createElement("iframe");
+            iframe.id = "webrtcFrame";
+            iframe.style.cssText = "width:100%;aspect-ratio:16/9;border:none;background:#000;display:block;";
+            video.replaceWith(iframe);
+          }
+          iframe.src = url;
+        } else {
+          setOffline("Stream nicht aktiv — Edge-PC verbunden?");
+        }
+      })
+      .catch(() => {
+        // Direkt versuchen
+        const container = video.parentElement;
+        let iframe = document.getElementById("webrtcFrame");
+        if (!iframe) {
+          iframe = document.createElement("iframe");
+          iframe.id = "webrtcFrame";
+          iframe.style.cssText = "width:100%;aspect-ratio:16/9;border:none;background:#000;display:block;";
+          video.replaceWith(iframe);
+        }
+        iframe.src = url;
+        setOnline();
+      });
+  }
+
+  // ── HLS (hls.js) ──────────────────────────────────────────────────────
+  function loadHLS(url) {
+    statusText.textContent = "HLS verbindet ...";
+    restoreVideo();
+
+    if (window.Hls && Hls.isSupported()) {
+      if (hlsInstance) hlsInstance.destroy();
+      hlsInstance = new Hls({ lowLatencyMode: true, liveSyncDurationCount: 1 });
+      hlsInstance.loadSource(url);
+      hlsInstance.attachMedia(video);
+      hlsInstance.on(Hls.Events.MANIFEST_PARSED, () => {
+        video.play();
+        setOnline();
+      });
+      hlsInstance.on(Hls.Events.ERROR, (e, data) => {
+        if (data.fatal) setOffline("HLS Fehler: " + data.type);
+      });
+    } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
+      // Safari native HLS
+      video.src = url;
+      video.play().then(setOnline).catch(e => setOffline(e));
+    } else {
+      setOffline("HLS nicht unterstützt — WebRTC verwenden");
+    }
+  }
+
+  // ── MJPEG (direkter Kamera-Zugriff, nur lokal) ────────────────────────
+  function loadMJPEG(url) {
+    statusText.textContent = "MJPEG (lokal) ...";
+    restoreVideo();
+    const img = document.createElement("img");
+    img.src   = url;
+    img.style.cssText = "width:100%;display:block;background:#000;";
+    img.onload = setOnline;
+    img.onerror = () => setOffline("MJPEG nicht erreichbar — nur im lokalen Netz verfügbar");
+    const container = video.parentElement;
+    video.replaceWith(img);
+  }
+
+  function restoreVideo() {
+    const container = document.querySelector(".video-container");
+    const existing  = container.querySelector("iframe,img");
+    if (existing) {
+      const v = document.createElement("video");
+      v.id       = "videoPlayer";
+      v.autoplay = true;
+      v.muted    = true;
+      v.setAttribute("playsinline", "");
+      v.controls = true;
+      existing.replaceWith(v);
+    }
+  }
+
+  function setOnline() {
+    statusDot.classList.remove("offline");
+    statusText.textContent = "Live ✓";
+    errorMsg.classList.remove("show");
+    document.getElementById("liveBadge").textContent = "● LIVE";
+    connectTime = connectTime || Date.now();
+  }
+
+  function setOffline(msg) {
+    statusDot.classList.add("offline");
+    statusText.textContent = "Offline";
+    errorMsg.classList.add("show");
+    errorMsg.textContent = "⚠️ " + (msg || "Stream nicht erreichbar");
+    document.getElementById("liveBadge").textContent = "○ OFFLINE";
+  }
+
+  function reconnect() { loadStream(); }
+
+  function toggleFullscreen() {
+    const el = document.querySelector(".video-container");
+    if (!document.fullscreenElement) {
+      el.requestFullscreen();
+    } else {
+      document.exitFullscreen();
+    }
+  }
+
+  function takeSnapshot() {
+    const v = document.querySelector("video");
+    if (!v) return;
+    const canvas = document.createElement("canvas");
+    canvas.width  = v.videoWidth  || 1280;
+    canvas.height = v.videoHeight || 720;
+    canvas.getContext("2d").drawImage(v, 0, 0);
+    const a = document.createElement("a");
+    a.href     = canvas.toDataURL("image/jpeg", 0.95);
+    a.download = `stallwache_${new Date().toISOString().slice(0,19).replace(/:/g,"-")}.jpg`;
+    a.click();
+  }
+
+  // ── Uptime ─────────────────────────────────────────────────────────────
+  setInterval(() => {
+    if (connectTime) {
+      const sec = Math.floor((Date.now() - connectTime) / 1000);
+      const m   = Math.floor(sec / 60);
+      const s   = sec % 60;
+      document.getElementById("uptimeVal").textContent =
+        m > 0 ? `${m}m ${s}s` : `${s}s`;
+    }
+  }, 1000);
+
+  // ── hls.js nachladen ───────────────────────────────────────────────────
+  const hlsScript = document.createElement("script");
+  hlsScript.src   = "https://cdn.jsdelivr.net/npm/hls.js@latest";
+  hlsScript.onload = () => { if (currentProtocol === "hls") loadStream(); };
+  document.head.appendChild(hlsScript);
+
+  // ── Start ──────────────────────────────────────────────────────────────
+  loadStream();
+</script>
+</body>
+</html>
