@@ -1,0 +1,32 @@
+{
+  "version": 2,
+  "name": "stallwache",
+  "builds": [
+    {
+      "src": "vercel_app.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "vercel_app.py"
+    }
+  ],
+  "env": {
+    "CAMERA_RTSP_URL": "@camera_rtsp_url",
+    "CAMERA_USERNAME": "@camera_username",
+    "CAMERA_PASSWORD": "@camera_password",
+    "TELEGRAM_BOT_TOKEN": "@telegram_bot_token",
+    "TELEGRAM_CHAT_ID": "@telegram_chat_id",
+    "ENABLE_TELEGRAM": "true",
+    "DEVICE": "cpu",
+    "YOLO_MODEL_PATH": "./models/yolov8m.pt",
+    "CONFIDENCE_THRESHOLD": "0.65",
+    "FRAME_SKIP": "1",
+    "LOG_LEVEL": "INFO",
+    "LOG_RETENTION_DAYS": "30"
+  },
+  "regions": ["iad1"],
+  "public": true
+}

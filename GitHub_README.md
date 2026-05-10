@@ -31,12 +31,32 @@ Stallwache monitors cattle in real-time using IP camera streams, detects calf bi
 
 ## 🚀 Quick Start
 
-### Requirements
+### Deployment Options
+
+**Option 1: Docker (Recommended for Local Use)**
+- Continuous RTSP stream processing
+- Local database with full features
+- Perfect for stable farm networks
+- See: [DEPLOY_NOW.md](./DEPLOY_NOW.md)
+
+**Option 2: Vercel Serverless (Recommended for Cloud Use)** ⭐ NEW!
+- REST API endpoints for remote access
+- Cloud-based scalable deployment
+- Auto-scaling, HTTPS, monitoring included
+- No server to manage
+- See: [VERCEL_QUICK_START.md](./VERCEL_QUICK_START.md)
+
+### Requirements (Docker)
 - Docker & Docker Compose
 - IP Camera with RTSP stream
 - Python 3.10+ (for validation scripts)
 
-### Installation (3 Minutes)
+### Requirements (Vercel)
+- GitHub account
+- Vercel account (free)
+- Environment variables for config
+
+### Installation (3 Minutes - Docker)
 
 ```bash
 # 1. Clone the repository
