@@ -1,5 +1,18 @@
 {
-  "description": "AI-powered calf birthing detection system with real-time monitoring",
+  "name": "Stallwache",
+  "requirements": [
+    "Python 3.10+",
+    "IP Camera with RTSP",
+    "Docker & Docker Compose (for local)",
+    "Vercel account (for cloud)",
+    "Telegram bot token"
+  ],
+  "deployment": [
+    "Docker",
+    "Vercel Serverless",
+    "Cloud",
+    "Local"
+  ],
   "tags": [
     "AI",
     "Object Detection",
@@ -10,38 +23,10 @@
     "YOLOv8",
     "Computer Vision"
   ],
-  "homepage": "https://github.com/stallwache/skill",
-  "repository": "https://github.com/stallwache/skill",
-  "requirements": [
-    "Python 3.10+",
-    "IP Camera with RTSP",
-    "Docker & Docker Compose (for local)",
-    "Vercel account (for cloud)",
-    "Telegram bot token"
-  ],
-  "author": "Stallwache Team",
-  "name": "Stallwache",
-  "support": {
-    "github": "https://github.com/stallwache/skill",
-    "email": "stallwache123@gmail.com",
-    "documentation": "See project files"
-  },
-  "keywords": [
-    "calf",
-    "birthing",
-    "detection",
-    "agriculture",
-    "monitoring",
-    "AI",
-    "cattle"
-  ],
   "email": "stallwache123@gmail.com",
-  "categories": [
-    "Agriculture",
-    "AI/ML",
-    "IoT",
-    "Monitoring"
-  ],
+  "license": "MIT",
+  "author": "Stallwache Team",
+  "repository": "https://github.com/stallwache/skill",
   "features": [
     "Real-time YOLOv8 detection (28-30 FPS)",
     "RTSP camera stream processing",
@@ -52,12 +37,27 @@
     "24/7 monitoring with auto-restart",
     "Comprehensive logging and metrics"
   ],
+  "support": {
+    "email": "stallwache123@gmail.com",
+    "github": "https://github.com/stallwache/skill",
+    "documentation": "See project files"
+  },
+  "homepage": "https://github.com/stallwache/skill",
   "version": "1.0.0",
-  "deployment": [
-    "Docker",
-    "Vercel Serverless",
-    "Cloud",
-    "Local"
+  "keywords": [
+    "calf",
+    "birthing",
+    "detection",
+    "agriculture",
+    "monitoring",
+    "AI",
+    "cattle"
   ],
-  "license": "MIT"
+  "categories": [
+    "Agriculture",
+    "AI/ML",
+    "IoT",
+    "Monitoring"
+  ],
+  "description": "AI-powered calf birthing detection system with real-time monitoring"
 }
