@@ -5,7 +5,7 @@
     {
       "id": 0,
       "name": "complete-deployment",
-      "prompt": "I have a Rollei Safetycam HD 20 at IP 192.168.178.108:80 and want to set up automated calf birthing detection with alerts. I already have Docker installed and want to deploy this to production. My camera credentials are username 'Stallwache123!' and password 'Stallwache123!'. I want Telegram alerts enabled. Walk me through the complete setup process step-by-step.",
+      "prompt": "I have a Rollei Safetycam HD 20 at IP 192.168.178.108:80 and want to set up automated calf birthing detection with alerts. I already have Docker installed and want to deploy this to production. My camera credentials are username '<BENUTZER>' and password '<PASSWORT>'. I want Telegram alerts enabled. Walk me through the complete setup process step-by-step.",
       "expected_output": "Comprehensive deployment walkthrough covering: (1) Hardware verification, (2) Kamera-Konfiguration, (3) Telegram Bot setup, (4) .env configuration creation, (5) Docker deployment, (6) System validation, (7) Monitoring setup. Should include actual commands to run and expected outputs at each step.",
       "assertions": [
         {

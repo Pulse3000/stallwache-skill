@@ -66,9 +66,9 @@ git push origin main
 Vercel will ask for environment variables. Add these:
 
 ```
-CAMERA_RTSP_URL = rtsp://admin:Stallwache123!@192.168.178.108/stream
+CAMERA_RTSP_URL = rtsp://<BENUTZER>:<PASSWORT>@192.168.178.108/stream
 CAMERA_USERNAME = admin
-CAMERA_PASSWORD = Stallwache123!
+CAMERA_PASSWORD = <PASSWORT>
 TELEGRAM_BOT_TOKEN = your_bot_token_here
 TELEGRAM_CHAT_ID = your_chat_id_here
 ENABLE_TELEGRAM = true

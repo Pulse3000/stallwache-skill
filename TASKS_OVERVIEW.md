@@ -27,7 +27,7 @@ SUCCESS RATE:            78.6% (11/14 complete, 1 in progress)
 
 ### Task 1: Rollei HD 20 Integration
 - ✅ Camera IP configured: 192.168.178.108:80
-- ✅ RTSP URL: rtsp://admin:Stallwache123!@192.168.178.108/stream
+- ✅ RTSP URL: rtsp://<BENUTZER>:<PASSWORT>@192.168.178.108/stream
 - ✅ Credentials stored in .env.production
 - ✅ Hardware validated
 

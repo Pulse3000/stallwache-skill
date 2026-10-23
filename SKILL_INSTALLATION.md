@@ -162,8 +162,8 @@ Sammle diese Informationen:
 ```
 Ich will ein automatisches Kalberkennungs-System aufsetzen.
 Ich habe die Kamera IP 192.168.178.108:80, 
-Username: Stallwache123!, 
-Password: Stallwache123!
+Username: <BENUTZER>, 
+Password: <PASSWORT>
 Und ich bin bereit für Production-Deployment mit Docker.
 ```
 

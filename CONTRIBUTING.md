@@ -332,7 +332,7 @@ pre-commit run --all-files
 ### Example
 ```python
 # ❌ DON'T: Hardcode credentials
-CAMERA_PASSWORD = "Stallwache123!"
+CAMERA_PASSWORD = "<PASSWORT>"
 
 # ✅ DO: Use environment variables
 import os

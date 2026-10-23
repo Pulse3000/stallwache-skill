@@ -248,8 +248,8 @@ Before deploying, verify:
   [ ] CAMERA CREDENTIALS CORRECT
       IP: 192.168.178.108
       RTSP: rtsp://192.168.178.108:554/stream
-      Username: Stallwache123!
-      Password: Stallwache123!
+      Username: <BENUTZER>
+      Password: <PASSWORT>
       (Update in .env.production if different)
 
   [ ] DOCKER INSTALLED

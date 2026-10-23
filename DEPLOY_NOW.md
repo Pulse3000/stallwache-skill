@@ -9,8 +9,8 @@
 ```
 ✅ Kamera IP:          192.168.178.108:80
 ✅ RTSP Stream:        rtsp://192.168.178.108:554/stream
-✅ Username:           Stallwache123!
-✅ Password:           Stallwache123!
+✅ Username:           <BENUTZER>
+✅ Password:           <PASSWORT>
 ✅ DDNS:               stallwache.rolleicam.net
 ✅ Kamera-ID:          006E07844083
 ✅ Status:             Alle Credentials gesetzt ✓
@@ -157,7 +157,7 @@ curl http://localhost:8000/metrics
 ping 192.168.178.108
 
 # 2. Prüfe mit VLC
-vlc "rtsp://Stallwache123!:Stallwache123!@192.168.178.108:554/stream"
+vlc "rtsp://<BENUTZER>:<PASSWORT>@192.168.178.108:554/stream"
 
 # 3. Prüfe .env.production
 cat .env.production | grep CAMERA
@@ -179,8 +179,8 @@ docker-compose up -d
 
 ```bash
 # Credentials prüfen in .env.production
-CAMERA_USERNAME=Stallwache123!
-CAMERA_PASSWORD=Stallwache123!
+CAMERA_USERNAME=<BENUTZER>
+CAMERA_PASSWORD=<PASSWORT>
 
 # RTSP-URL prüfen
 CAMERA_RTSP_URL=rtsp://192.168.178.108:554/stream
