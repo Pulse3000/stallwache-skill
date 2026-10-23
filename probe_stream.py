@@ -6,20 +6,21 @@ und gibt den funktionierenden Stream-Pfad aus.
 
 Usage:
     python3 probe_stream.py
-    python3 probe_stream.py --ip 192.168.178.108 --user Stallwache123! --pwd Stallwache123!
+    python3 probe_stream.py --ip 192.168.178.108 --user <BENUTZER> --pwd <PASSWORT>
 """
 
 import argparse
 import urllib.request
 import urllib.error
+import os
 import socket
 import time
 import sys
 
 # ── Kamera-Einstellungen ────────────────────────────────────────────────────
 DEFAULT_IP   = "192.168.178.108"
-DEFAULT_USER = "Stallwache123!"
-DEFAULT_PWD  = "Stallwache123!"
+DEFAULT_USER = os.getenv("CAMERA_USERNAME", "")
+DEFAULT_PWD  = os.getenv("CAMERA_PASSWORD", "")
 TIMEOUT      = 5
 
 # ── Bekannte Stream-Pfade ───────────────────────────────────────────────────

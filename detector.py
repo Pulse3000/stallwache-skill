@@ -18,15 +18,19 @@ logger = get_logger(__name__)
 
 
 class CavingDetector:
-    """Detektor für Kalberkennungs-Events."""
+    """Detektor für Kalberkennungs-Events.
 
-    # Signatur-Features für Kalbung
-    CALVING_INDICATORS = {
-        'cow_detected': True,
-        'calf_nearby': True,
-        'posture_lowered': True,  # Optional: Pose-Estimation
-        'unusual_position': False,  # Optional: Spatial Analysis
-    }
+    Eine Kalbung meldet nur ein Modell-Befund: Fruchtblase (amniotic_sac)
+    oder Kälberfüße (calf_legs) mit Konfidenz > 0.80 — dieselbe Regel wie
+    der Austreibungs-Override der Edge-Wache (Die_Stallwache). „Kuh plus
+    zweites Objekt" ist kein Geburtsbefund: Mit einem COCO-Modell meldete
+    der Detektor jede Kuh neben einer zweiten Kuh oder einem Menschen als
+    Kalbung. Ein Modell ohne diese Klassen meldet deshalb nie eine Kalbung.
+    """
+
+    # Geburts-Evidenz eines eigens trainierten Modells (Klassennamen).
+    EVIDENZ_KLASSEN = ('amniotic_sac', 'calf_legs')
+    EVIDENZ_KONFIDENZ = 0.80
 
     def __init__(
         self,
@@ -52,6 +56,16 @@ class CavingDetector:
         self.last_detection_time = None
         self.detection_history = []
         self.max_history_size = 30  # ~1 Sekunde bei 30fps
+
+        namen = getattr(model, 'names', None) or {}
+        namen = set(namen.values()) if isinstance(namen, dict) else set(namen)
+        self.kennt_evidenz = bool(namen & set(self.EVIDENZ_KLASSEN))
+        if not self.kennt_evidenz:
+            logger.warning(
+                "Modell kennt keine Geburtsklassen (%s) – Kalbungs-Alarme sind "
+                "abgeschaltet. Ein eigenes Modell mit diesen Klassen trainieren.",
+                ", ".join(self.EVIDENZ_KLASSEN)
+            )
 
         logger.info(
             f"CavingDetector initialisiert | "
@@ -80,12 +94,13 @@ class CavingDetector:
 
             detections = self._parse_results(results[0], frame)
 
-            # Kalbungs-Logik
-            calving_detected = self._analyze_calving_indicators(detections, frame)
+            # Kalbungs-Logik: nur mit Modell-Befund
+            beleg = self._geburts_beleg(detections)
+            calving_detected = beleg is not None
 
             detection_result = {
                 'calving_detected': calving_detected,
-                'confidence': detections.get('max_confidence', 0.0),
+                'confidence': beleg if calving_detected else detections.get('max_confidence', 0.0),
                 'objects_detected': detections.get('num_objects', 0),
                 'timestamp': datetime.now(),
                 'detections': detections.get('classes', {})
@@ -149,52 +164,20 @@ class CavingDetector:
 
         return detections
 
-    def _analyze_calving_indicators(self, detections: Dict, frame: np.ndarray) -> bool:
+    def _geburts_beleg(self, detections: Dict) -> Optional[float]:
+        """Höchste Konfidenz einer Geburts-Evidenz über der Schwelle, sonst None.
+
+        Kein Zeitfilter: Fruchtblase und Kälberfüße sind ein Notfall, jede
+        einzelne Erkennung zählt (Recall vor Präzision).
         """
-        Analysiere ob Kalbungs-Indikatoren vorhanden sind.
-
-        Kalbungs-Signale:
-        - Kuh erkannt
-        - Kalb erkannt (oder Kuh gebeugte Haltung)
-        - Zeitliche Sequenzen (mehrere Frames hintereinander)
-        """
-        # Basisch: Erkenne wenn "cow" oder "person" + high confidence
-        detected_classes = list(detections.get('classes', {}).keys())
-
-        calving_score = 0
-
-        # Kuh erkannt
-        if 'cow' in detected_classes:
-            cow_conf = max([d['confidence'] for d in detections['classes']['cow']])
-            if cow_conf > 0.7:
-                calving_score += 0.5
-
-        # Kalb erkannt
-        if 'calf' in detected_classes:
-            calf_conf = max([d['confidence'] for d in detections['classes']['calf']])
-            if calf_conf > 0.6:
-                calving_score += 0.3
-
-        # Temporal Analysis: Konsistenz über mehrere Frames
-        if len(self.detection_history) > 5:
-            recent_calving = sum(
-                1 for d in self.detection_history[-5:]
-                if d.get('objects_detected', 0) > 1
-            )
-            if recent_calving >= 3:
-                calving_score += 0.2
-
-        # Schwellenwert
-        is_calving = calving_score > 0.6
-
-        if is_calving:
-            logger.debug(
-                f"Kalbungs-Indikatoren erkannt | "
-                f"Score: {calving_score:.2f} | "
-                f"Classes: {detected_classes}"
-            )
-
-        return is_calving
+        beleg = None
+        for klasse in self.EVIDENZ_KLASSEN:
+            for det in detections.get('classes', {}).get(klasse, []):
+                if det['confidence'] > self.EVIDENZ_KONFIDENZ:
+                    beleg = max(beleg or 0.0, det['confidence'])
+        if beleg is not None:
+            logger.debug(f"Geburts-Evidenz erkannt | Konfidenz: {beleg:.2f}")
+        return beleg
 
     def _draw_detections(self, frame: np.ndarray, detections: Dict) -> np.ndarray:
         """Zeichne Erkennungen in Frame."""

@@ -52,8 +52,8 @@ FERTIG! 🎉 System läuft jetzt im Hintergrund!
 
 IP-Adresse:        192.168.178.108:80
 RTSP-URL:          rtsp://192.168.178.108:554/stream
-Username:          Stallwache123!
-Password:          Stallwache123!
+Username:          <BENUTZER>
+Password:          <PASSWORT>
 DDNS-Domain:       stallwache.rolleicam.net
 
 ➜ Du kannst direkt starten, keine weitere Konfiguration nötig!

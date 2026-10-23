@@ -262,8 +262,8 @@ requirements.txt
  ├─ DEINE produktive Konfiguration
  ├─ Mit ALLEN Credentials bereits gesetzt
  │  ├─ CAMERA_RTSP_URL=rtsp://192.168.178.108:554/stream
- │  ├─ CAMERA_USERNAME=Stallwache123!
- │  └─ CAMERA_PASSWORD=Stallwache123!
+ │  ├─ CAMERA_USERNAME=<BENUTZER>
+ │  └─ CAMERA_PASSWORD=<PASSWORT>
  ├─ Telegram (falls aktiviert)
  └─ Alle anderen Parameter konfiguriert
 

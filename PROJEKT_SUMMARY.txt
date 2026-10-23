@@ -101,8 +101,8 @@ GESAMT: ~1.160 Zeilen produktiver Python-Code
 14. .env.production ✅ MIT DEINEN CREDENTIALS
     → Produktive Konfiguration
     → Kamera-IP: 192.168.178.108:80
-    → Username: Stallwache123!
-    → Password: Stallwache123!
+    → Username: <BENUTZER>
+    → Password: <PASSWORT>
 
 15. READY_TO_DEPLOY.md
     → Production Readiness Checklist
@@ -264,8 +264,8 @@ GESAMT: ~1.160 Zeilen produktiver Python-Code
 
 Kamera IP:         192.168.178.108:80
 RTSP Stream:       rtsp://192.168.178.108:554/stream
-Username:          Stallwache123! ✓
-Password:          Stallwache123! ✓
+Username:          <BENUTZER>
+Password:          <PASSWORT>
 DDNS Domain:       stallwache.rolleicam.net
 Kamera ID:         006E07844083
 

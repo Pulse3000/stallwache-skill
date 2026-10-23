@@ -18,8 +18,8 @@ CAMERA_RTSP_URL = os.getenv(
     "CAMERA_RTSP_URL",
     "rtsp://192.168.178.108:554/stream"
 )
-CAMERA_USERNAME = os.getenv("CAMERA_USERNAME", "Stallwache123!")
-CAMERA_PASSWORD = os.getenv("CAMERA_PASSWORD", "Stallwache123!")
+CAMERA_USERNAME = os.getenv("CAMERA_USERNAME", "")  # nie ein echtes Passwort als Default
+CAMERA_PASSWORD = os.getenv("CAMERA_PASSWORD", "")
 
 # Stream-Verarbeitung
 FRAME_SKIP = int(os.getenv("FRAME_SKIP", "1"))  # Jedes N-te Frame verarbeiten

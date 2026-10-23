@@ -26,7 +26,7 @@
 
 ### Task 1: Rollei HD 20 Integration ✅
 - Camera IP: 192.168.178.108:80
-- RTSP URL: rtsp://admin:Stallwache123!@192.168.178.108/stream
+- RTSP URL: rtsp://<BENUTZER>:<PASSWORT>@192.168.178.108/stream
 - Credentials: Pre-configured
 - Status: **VALIDATED**
 
