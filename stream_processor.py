@@ -8,6 +8,7 @@ import numpy as np
 import threading
 import queue
 import time
+import urllib.parse
 from typing import Optional
 from dataclasses import dataclass
 
@@ -15,6 +16,26 @@ from logger import get_logger
 from config import BUFFER_SIZE, STREAM_TIMEOUT, RESIZE_WIDTH, RESIZE_HEIGHT
 
 logger = get_logger(__name__)
+
+
+def ohne_zugangsdaten(url: str) -> str:
+    """URL fürs Log: rtsp://BENUTZER:PASSWORT@host/... -> rtsp://host/...
+
+    main.py baut die Stream-URL mit CAMERA_USERNAME/CAMERA_PASSWORD; das
+    Passwort darf nie im Log landen.
+    """
+    try:
+        teile = urllib.parse.urlsplit(url)
+    except ValueError:
+        return "<ungueltige URL>"
+    if teile.username is None and teile.password is None:
+        return url
+    host = teile.hostname or ""
+    if ":" in host:
+        host = f"[{host}]"  # IPv6
+    if teile.port:
+        host = f"{host}:{teile.port}"
+    return urllib.parse.urlunsplit((teile.scheme, host, teile.path, teile.query, teile.fragment))
 
 
 @dataclass
@@ -59,12 +80,12 @@ class RTSPStreamProcessor:
         self.connection_errors = 0
         self.max_connection_errors = 5
 
-        logger.info(f"RTSPStreamProcessor initialisiert | URL: {rtsp_url}")
+        logger.info(f"RTSPStreamProcessor initialisiert | URL: {ohne_zugangsdaten(rtsp_url)}")
 
     def start(self) -> bool:
         """Starte Stream-Verarbeitung in separatem Thread."""
         try:
-            logger.info(f"Verbinde zu RTSP-Stream: {self.rtsp_url}")
+            logger.info(f"Verbinde zu RTSP-Stream: {ohne_zugangsdaten(self.rtsp_url)}")
 
             self.cap = cv2.VideoCapture(self.rtsp_url)
             self.cap.set(cv2.CAP_PROP_BUFFERSIZE, 1)  # Minimale Latenz
