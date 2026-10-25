@@ -17,6 +17,23 @@ from config import BUFFER_SIZE, STREAM_TIMEOUT, RESIZE_WIDTH, RESIZE_HEIGHT
 logger = get_logger(__name__)
 
 
+def ohne_zugangsdaten(url: str) -> str:
+    """URL fürs Log: rtsp://BENUTZER:PASSWORT@host/... -> rtsp://host/...
+
+    main.py baut die Stream-URL mit CAMERA_USERNAME/CAMERA_PASSWORD, und
+    zwar unkodiert. Ein Passwort mit '#', '/', '?' oder '@' zerlegt urlsplit
+    falsch. Deshalb wird alles zwischen '://' und dem LETZTEN '@' entfernt,
+    ohne die URL zu parsen. Im Zweifel geht dabei mehr verloren als nötig
+    (ein '@' im Pfad), aber nie bleibt ein Passwort stehen.
+    """
+    schema, trenner, rest = url.partition("://")
+    if not trenner:
+        return "<URL mit Zugangsdaten>" if "@" in url else url
+    if "@" not in rest:
+        return url
+    return f"{schema}://{rest.rsplit('@', 1)[1]}"
+
+
 @dataclass
 class StreamFrame:
     """Datenklasse für Stream-Frames."""
@@ -59,12 +76,12 @@ class RTSPStreamProcessor:
         self.connection_errors = 0
         self.max_connection_errors = 5
 
-        logger.info(f"RTSPStreamProcessor initialisiert | URL: {rtsp_url}")
+        logger.info(f"RTSPStreamProcessor initialisiert | URL: {ohne_zugangsdaten(rtsp_url)}")
 
     def start(self) -> bool:
         """Starte Stream-Verarbeitung in separatem Thread."""
         try:
-            logger.info(f"Verbinde zu RTSP-Stream: {self.rtsp_url}")
+            logger.info(f"Verbinde zu RTSP-Stream: {ohne_zugangsdaten(self.rtsp_url)}")
 
             self.cap = cv2.VideoCapture(self.rtsp_url)
             self.cap.set(cv2.CAP_PROP_BUFFERSIZE, 1)  # Minimale Latenz
