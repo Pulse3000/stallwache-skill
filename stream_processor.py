@@ -10,11 +10,27 @@ import queue
 import time
 from typing import Optional
 from dataclasses import dataclass
+from urllib.parse import urlsplit, urlunsplit
 
 from logger import get_logger
 from config import BUFFER_SIZE, STREAM_TIMEOUT, RESIZE_WIDTH, RESIZE_HEIGHT
 
 logger = get_logger(__name__)
+
+
+def url_ohne_zugangsdaten(url: str) -> str:
+    """RTSP-URL für Logs: Benutzer und Passwort (user:pass@) entfernt."""
+    try:
+        teile = urlsplit(url)
+        sauber = urlunsplit(teile._replace(netloc=teile.netloc.rpartition("@")[2]))
+    except ValueError:
+        return "<ungültige URL>"
+    # Unkodiertes / ? # im Passwort beendet den Host-Teil zu früh und schiebt
+    # den Rest der Zugangsdaten in Pfad/Query: dann bis zum letzten @ kappen.
+    if "@" in sauber:
+        schema, trenner, rest = sauber.partition("://")
+        sauber = schema + trenner + rest.rpartition("@")[2] if trenner else "<ungültige URL>"
+    return sauber
 
 
 @dataclass
@@ -59,12 +75,14 @@ class RTSPStreamProcessor:
         self.connection_errors = 0
         self.max_connection_errors = 5
 
-        logger.info(f"RTSPStreamProcessor initialisiert | URL: {rtsp_url}")
+        logger.info(
+            f"RTSPStreamProcessor initialisiert | URL: {url_ohne_zugangsdaten(rtsp_url)}"
+        )
 
     def start(self) -> bool:
         """Starte Stream-Verarbeitung in separatem Thread."""
         try:
-            logger.info(f"Verbinde zu RTSP-Stream: {self.rtsp_url}")
+            logger.info(f"Verbinde zu RTSP-Stream: {url_ohne_zugangsdaten(self.rtsp_url)}")
 
             self.cap = cv2.VideoCapture(self.rtsp_url)
             self.cap.set(cv2.CAP_PROP_BUFFERSIZE, 1)  # Minimale Latenz
