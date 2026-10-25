@@ -8,7 +8,6 @@ import numpy as np
 import threading
 import queue
 import time
-import urllib.parse
 from typing import Optional
 from dataclasses import dataclass
 
@@ -21,21 +20,18 @@ logger = get_logger(__name__)
 def ohne_zugangsdaten(url: str) -> str:
     """URL fürs Log: rtsp://BENUTZER:PASSWORT@host/... -> rtsp://host/...
 
-    main.py baut die Stream-URL mit CAMERA_USERNAME/CAMERA_PASSWORD; das
-    Passwort darf nie im Log landen.
+    main.py baut die Stream-URL mit CAMERA_USERNAME/CAMERA_PASSWORD, und
+    zwar unkodiert. Ein Passwort mit '#', '/', '?' oder '@' zerlegt urlsplit
+    falsch. Deshalb wird alles zwischen '://' und dem LETZTEN '@' entfernt,
+    ohne die URL zu parsen. Im Zweifel geht dabei mehr verloren als nötig
+    (ein '@' im Pfad), aber nie bleibt ein Passwort stehen.
     """
-    try:
-        teile = urllib.parse.urlsplit(url)
-    except ValueError:
-        return "<ungueltige URL>"
-    if teile.username is None and teile.password is None:
+    schema, trenner, rest = url.partition("://")
+    if not trenner:
+        return "<URL mit Zugangsdaten>" if "@" in url else url
+    if "@" not in rest:
         return url
-    host = teile.hostname or ""
-    if ":" in host:
-        host = f"[{host}]"  # IPv6
-    if teile.port:
-        host = f"{host}:{teile.port}"
-    return urllib.parse.urlunsplit((teile.scheme, host, teile.path, teile.query, teile.fragment))
+    return f"{schema}://{rest.rsplit('@', 1)[1]}"
 
 
 @dataclass
