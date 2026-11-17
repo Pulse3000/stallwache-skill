@@ -1,6 +1,21 @@
 # 🐄 Stallwache - KI-basiertes Kalberkennungssystem
 
-Vollautomatisches, produktionsreifes System zur Echtzeitüberwachung von Kühen und automatischer Erkennung von Kalbungen.
+System zur Überwachung von Kühen über eine IP-Kamera mit Telegram-Meldung bei
+einem Geburtsbefund des Modells.
+
+> **Stand (November 2026) — bitte zuerst lesen**
+>
+> - **Ohne eigenes Modell gibt es keinen Kalbungs-Alarm.** Gemeldet wird nur
+>   ein Modell-Befund: Klasse `amniotic_sac` (Fruchtblase) oder `calf_legs`
+>   (Kälberfüße) mit Konfidenz über 0.80. Das Standardmodell `yolov8m.pt`
+>   kennt diese Klassen nicht; das System warnt beim Start und schweigt.
+> - **Ein trainiertes Modell liegt nicht bei.**
+> - **Leistungsangaben in diesem Repo sind Zielwerte, nicht gemessen.**
+> - Dies ist ein eigenständiger Prototyp. Das gepflegte System (Webapp,
+>   Edge-Agent, Erkennungsregeln, Roadmap) liegt im Repo
+>   `Pulse3000/Die_Stallwache`.
+> - Prüfen: `bash pruefen.sh`. Einstieg für Agenten-Sitzungen: `CLAUDE.md`.
+> - Überholte Status- und Launch-Dokumente liegen in `archiv/`.
 
 **Features:**
 - ✅ RTSP-Stream-Verarbeitung (Rollei HD 20 & kompatibel)
