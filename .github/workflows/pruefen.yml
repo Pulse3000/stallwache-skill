@@ -1,0 +1,28 @@
+# Prueft jeden PR und jeden Stand auf main – dasselbe wie lokal `bash pruefen.sh`.
+# Pures Python: Die Tests stubben cv2, numpy und ultralytics. Bewusst KEIN
+# pip install – die Pruefungen muessen ohne Pakete laufen.
+name: pruefen
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pruefen-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  pruefen:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Syntax, Logiktests, Paket gegen Repo
+        run: bash pruefen.sh

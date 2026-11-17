@@ -7,14 +7,21 @@ compatibility: Python 3.10+, Vercel, Docker, macOS/Linux/Windows
 
 # 🐄 Stallwache - AI Calf Birthing Detection
 
-Fully automated system for detecting cattle calving (birthing) events in real-time using AI and sending instant Telegram alerts to farmers.
+System for detecting cattle calving (birthing) events from an IP camera stream and sending Telegram alerts to farmers.
+
+## ⚠️ Status — read this first
+
+- **A calving alert needs a custom-trained model.** The detector reports a calving only on model evidence: class `amniotic_sac` or `calf_legs` with confidence above 0.80. The default model (`yolov8m.pt`, COCO classes) does not know these classes, so **with the default model no calving alert is ever sent** — the system logs a warning at start and stays silent. This is deliberate: "a cow next to a second object" is not evidence of a birth.
+- **No trained model ships with this skill.** Training your own is a prerequisite, not an option.
+- **Performance figures below are targets, not measurements** on a reference device.
+- This repository is a standalone prototype. The maintained system (web app, edge agent, detection rules, roadmap) is developed in `Pulse3000/Die_Stallwache`.
 
 ## 🎯 What Stallwache Does
 
-**Monitors cattle 24/7 via IP camera, detects births via AI, sends instant alerts via Telegram.**
+**Reads an IP camera stream, runs YOLOv8 on it, and sends a Telegram alert when the model reports birth evidence.**
 
 ### Key Features
-- ✅ Real-time YOLOv8 AI detection (28-30 FPS @ 1080p)
+- ✅ YOLOv8 inference on the camera stream
 - ✅ RTSP camera stream processing
 - ✅ Instant Telegram alerts with image
 - ✅ Event database logging
@@ -26,10 +33,10 @@ Fully automated system for detecting cattle calving (birthing) events in real-ti
 ## 🚀 Quick Start
 
 ### Docker Deployment (Local)
-\\\ash
+```bash
 # 1. Clone
-git clone https://github.com/stallwache/skill.git
-cd stallwache
+git clone https://github.com/Pulse3000/stallwache-skill.git
+cd stallwache-skill
 
 # 2. Configure
 cp .env.example .env.production
@@ -37,10 +44,10 @@ cp .env.example .env.production
 
 # 3. Deploy
 docker-compose up -d
-\\\
+```
 
 ### Vercel Deployment (Cloud)
-\\\ash
+```bash
 # 1. Push to GitHub
 git add .
 git push origin main
@@ -52,12 +59,12 @@ git push origin main
 
 # 6. Test
 curl https://stallwache-skill.vercel.app/api/health
-\\\
+```
 
 ## 🔧 Configuration
 
 ### Environment Variables
-\\\
+```
 CAMERA_RTSP_URL         - RTSP stream URL
 CAMERA_USERNAME         - Camera credentials
 CAMERA_PASSWORD         - Camera credentials
@@ -70,11 +77,11 @@ CONFIDENCE_THRESHOLD    - 0.0-1.0
 FRAME_SKIP              - Skip N frames
 LOG_LEVEL               - DEBUG/INFO/WARNING/ERROR
 LOG_RETENTION_DAYS      - Days to keep logs
-\\\
+```
 
 ## 📊 System Architecture
 
-\\\
+```
 RTSP Camera Stream
        ↓
 Stream Processor (RTSP)
@@ -86,7 +93,7 @@ Event Logger (SQLite)
 ├─ Telegram Alert (if detected)
 ├─ Database Entry
 └─ Metrics Update
-\\\
+```
 
 ## 🌐 REST API Endpoints (Vercel)
 
@@ -106,12 +113,14 @@ Event Logger (SQLite)
 - Optional API key authentication
 - Configurable CORS
 
-## 📈 Performance
+## 📈 Performance (targets, not measured)
 
-- **Processing:** 28-30 FPS @ 1080p
+These figures are design targets. They have not been measured on a reference
+device and depend on hardware, model size and stream resolution.
+
+- **Processing:** 28-30 FPS @ 1080p (GPU class hardware)
 - **Detection Latency:** <100ms
 - **Alert Delivery:** <2 seconds
-- **Uptime:** 99.99% on Vercel, 24/7 on Docker
 
 ## 📚 Documentation
 
@@ -122,7 +131,7 @@ Event Logger (SQLite)
 
 ## 🎓 Learn More
 
-- GitHub: https://github.com/stallwache/skill
+- GitHub: https://github.com/Pulse3000/stallwache-skill
 - Documentation: See project files
 - Support: stallwache123@gmail.com
 
@@ -137,5 +146,5 @@ Built with ❤️ for farmers and AI enthusiasts.
 ---
 
 **Version:** 1.0.0
-**Status:** Production Ready ✅
+**Status:** Prototype — calving alerts require a custom-trained model (see "Status" above)
 **Last Updated:** May 2026
